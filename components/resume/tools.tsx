@@ -22,7 +22,7 @@ const toolCategories = [
     labelEn: "Analytics",
     icon: BarChart3,
     tools: [
-      "Google Analytics", "Mixpanel", "Tableau",
+      "Google Analytics", "Tableau",
       "DataLens", "SQL", "Excel / Google Sheets",
       "Яндекс.Метрика"
     ],
@@ -119,7 +119,13 @@ export function Tools() {
           transition={{ duration: 0.3 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div
+            className={`grid gap-4 ${
+              activeCategory === "analytics"
+                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-3"
+                : "grid-cols-2 sm:grid-cols-4 lg:grid-cols-4"
+            }`}
+          >
             {currentCategory?.tools.map((tool, index) => (
               <motion.div
                 key={tool}
