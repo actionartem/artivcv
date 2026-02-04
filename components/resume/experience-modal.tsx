@@ -4,6 +4,7 @@ import { useLanguage } from "@/lib/language-context"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Calendar, Building2, ChevronDown } from "lucide-react"
 import { useEffect } from "react"
+import Image from "next/image"
 
 interface ExperienceModalProps {
   isOpen: boolean
@@ -11,6 +12,7 @@ interface ExperienceModalProps {
   experience: {
     company: string
     companyEn: string
+    logo?: string
     role: string
     roleEn: string
     period: string
@@ -64,8 +66,20 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-3">
                   {/* Logo placeholder */}
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                    <Building2 className="w-6 h-6 text-primary" />
+                  <div className="relative w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 overflow-hidden shrink-0">
+                    {experience.logo ? (
+                      <Image
+                        src={experience.logo}
+                        alt={t(experience.company, experience.companyEn)}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Building2 className="w-6 h-6 text-primary" />
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-foreground">
