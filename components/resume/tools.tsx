@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { Wrench, Sparkles, LayoutGrid, BarChart3, FileCode } from "lucide-react"
@@ -12,8 +13,14 @@ const toolCategories = [
     labelEn: "Product & Project",
     icon: LayoutGrid,
     tools: [
-      "Jira", "Confluence", "Notion", "Miro", "Figma", "Trello",
-      "Asana", "YouTrack"
+      { name: "Jira", logos: [{ src: "/logos/tools/jira.svg", alt: "Jira logo" }] },
+      { name: "Confluence", logos: [{ src: "/logos/tools/confluence.svg", alt: "Confluence logo" }] },
+      { name: "Notion", logos: [{ src: "/logos/tools/notion.svg", alt: "Notion logo" }] },
+      { name: "Miro", logos: [{ src: "/logos/tools/miro.svg", alt: "Miro logo" }] },
+      { name: "Figma", logos: [{ src: "/logos/tools/figma.svg", alt: "Figma logo" }] },
+      { name: "Trello", logos: [{ src: "/logos/tools/trello.svg", alt: "Trello logo" }] },
+      { name: "Asana", logos: [{ src: "/logos/tools/asana.svg", alt: "Asana logo" }] },
+      { name: "YouTrack", logos: [{ src: "/logos/tools/youtrack.svg", alt: "YouTrack logo" }] },
     ],
   },
   {
@@ -22,9 +29,18 @@ const toolCategories = [
     labelEn: "Analytics",
     icon: BarChart3,
     tools: [
-      "Google Analytics", "Tableau",
-      "DataLens", "SQL", "Excel / Google Sheets",
-      "Яндекс.Метрика"
+      { name: "Google Analytics", logos: [{ src: "/logos/tools/google-analytics.svg", alt: "Google Analytics logo" }] },
+      { name: "Tableau", logos: [{ src: "/logos/tools/tableau.svg", alt: "Tableau logo" }] },
+      { name: "DataLens", logos: [{ src: "/logos/tools/datalens.svg", alt: "DataLens logo" }] },
+      { name: "SQL", logos: [{ src: "/logos/tools/sql.svg", alt: "SQL logo" }] },
+      {
+        name: "Excel / Google Sheets",
+        logos: [
+          { src: "/logos/tools/microsoft.svg", alt: "Microsoft Excel logo" },
+          { src: "/logos/tools/google-sheets.svg", alt: "Google Sheets logo" },
+        ],
+      },
+      { name: "Яндекс.Метрика", logos: [{ src: "/logos/tools/yandex-metrica.svg", alt: "Яндекс.Метрика logo" }] },
     ],
   },
   {
@@ -33,8 +49,14 @@ const toolCategories = [
     labelEn: "Development",
     icon: FileCode,
     tools: [
-      "GitHub", "GitLab", "Bitbucket", "VS Code",
-      "Postman", "Swagger", "Docker", "PostgreSQL"
+      { name: "GitHub", logos: [{ src: "/logos/tools/github.svg", alt: "GitHub logo" }] },
+      { name: "GitLab", logos: [{ src: "/logos/tools/gitlab.svg", alt: "GitLab logo" }] },
+      { name: "Bitbucket", logos: [{ src: "/logos/tools/bitbucket.svg", alt: "Bitbucket logo" }] },
+      { name: "VS Code", logos: [{ src: "/logos/tools/vscode.svg", alt: "Visual Studio Code logo" }] },
+      { name: "Postman", logos: [{ src: "/logos/tools/postman.svg", alt: "Postman logo" }] },
+      { name: "Swagger", logos: [{ src: "/logos/tools/swagger.svg", alt: "Swagger logo" }] },
+      { name: "Docker", logos: [{ src: "/logos/tools/docker.svg", alt: "Docker logo" }] },
+      { name: "PostgreSQL", logos: [{ src: "/logos/tools/postgresql.svg", alt: "PostgreSQL logo" }] },
     ],
   },
   {
@@ -43,8 +65,14 @@ const toolCategories = [
     labelEn: "AI Tools",
     icon: Sparkles,
     tools: [
-      "ChatGPT", "Claude", "GitHub Copilot", "Midjourney",
-      "DALL-E", "Stable Diffusion", "Perplexity AI", "Cursor"
+      { name: "ChatGPT", logos: [{ src: "/logos/tools/chatgpt.svg", alt: "ChatGPT logo" }] },
+      { name: "Claude", logos: [{ src: "/logos/tools/claude.svg", alt: "Claude logo" }] },
+      { name: "GitHub Copilot", logos: [{ src: "/logos/tools/github-copilot.svg", alt: "GitHub Copilot logo" }] },
+      { name: "Midjourney", logos: [{ src: "/logos/tools/midjourney.svg", alt: "Midjourney logo" }] },
+      { name: "DALL-E", logos: [{ src: "/logos/tools/dall-e.svg", alt: "DALL-E logo" }] },
+      { name: "Stable Diffusion", logos: [{ src: "/logos/tools/stable-diffusion.svg", alt: "Stable Diffusion logo" }] },
+      { name: "Perplexity AI", logos: [{ src: "/logos/tools/perplexity.svg", alt: "Perplexity AI logo" }] },
+      { name: "Cursor", logos: [{ src: "/logos/tools/cursor.svg", alt: "Cursor logo" }] },
     ],
   },
 ]
@@ -128,21 +156,29 @@ export function Tools() {
           >
             {currentCategory?.tools.map((tool, index) => (
               <motion.div
-                key={tool}
+                key={tool.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.03 }}
                 whileHover={{ scale: 1.05, y: -4 }}
                 className="group p-4 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 text-center transition-all cursor-default"
               >
-                {/* Tool Icon Placeholder */}
-                <div className="w-10 h-10 mx-auto mb-3 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <span className="text-primary font-bold text-sm">
-                    {tool.charAt(0)}
-                  </span>
+                <div className="w-12 h-12 mx-auto mb-3 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="flex items-center justify-center gap-1">
+                    {tool.logos.map((logo) => (
+                      <Image
+                        key={logo.src}
+                        src={logo.src}
+                        alt={logo.alt}
+                        width={24}
+                        height={24}
+                        className="h-6 w-6 object-contain"
+                      />
+                    ))}
+                  </div>
                 </div>
                 <p className="text-sm font-medium text-foreground truncate">
-                  {tool}
+                  {tool.name}
                 </p>
               </motion.div>
             ))}
