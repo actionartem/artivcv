@@ -15,9 +15,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Иванов Артем Антонович — Руководитель продукта',
+  title: 'Иванов Артем Антонович - Руководитель продукта',
   description: 'Руководитель продукта с опытом развития коммерческих B2C и B2B-сервисов и ведения крупных технологических инициатив',
-  generator: 'v0.app',
+  generator: 'artivtw',
   icons: {
     icon: [
       {
