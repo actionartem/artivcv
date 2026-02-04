@@ -36,8 +36,16 @@ const toolCategories = [
       {
         name: "Excel / Google Sheets",
         logos: [
-          { src: "/logos/tools/microsoft.svg", alt: "Microsoft Excel logo" },
-          { src: "/logos/tools/google-sheets.svg", alt: "Google Sheets logo" },
+          {
+            src: "/logos/tools/microsoft.svg",
+            alt: "Microsoft Excel logo",
+            className: "h-5 w-5",
+          },
+          {
+            src: "/logos/tools/google-sheets.svg",
+            alt: "Google Sheets logo",
+            className: "h-5 w-5",
+          },
         ],
       },
       { name: "Яндекс.Метрика", logos: [{ src: "/logos/tools/yandex-metrica.svg", alt: "Яндекс.Метрика logo" }] },
@@ -172,7 +180,7 @@ export function Tools() {
                         alt={logo.alt}
                         width={24}
                         height={24}
-                        className="h-6 w-6 object-contain"
+                        className={`${logo.className ?? "h-6 w-6"} object-contain`}
                       />
                     ))}
                   </div>
