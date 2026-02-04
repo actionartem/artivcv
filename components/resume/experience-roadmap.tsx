@@ -327,17 +327,19 @@ export function ExperienceRoadmap() {
 
                   {/* Logo Placeholder & Company */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="relative w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
                       {exp.logo ? (
                         <Image
                           src={exp.logo}
                           alt={t(exp.company, exp.companyEn)}
-                          width={32}
-                          height={32}
-                          className="w-8 h-8 object-contain"
+                          fill
+                          sizes="48px"
+                          className="object-cover"
                         />
                       ) : (
-                        <Building2 className="w-6 h-6 text-primary" />
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Building2 className="w-6 h-6 text-primary" />
+                        </div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
