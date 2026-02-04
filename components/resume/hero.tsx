@@ -255,15 +255,6 @@ export function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.div>
 
-              {/* Floating badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 }}
-                className="absolute -top-2 -right-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-medium shadow-lg"
-              >
-                5+ {t("лет", "years")}
-              </motion.div>
             </div>
           </motion.div>
         </div>
