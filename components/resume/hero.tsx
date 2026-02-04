@@ -131,7 +131,7 @@ export function Hero() {
               transition={{ delay: 0.4 }}
               className="text-xl sm:text-2xl text-muted-foreground mb-6"
             >
-              {t("Руководитель продукта", "Product Manager")}
+              {t("Руководитель продукта с опытом работы 5+ лет", "Product Manager with 5+ years of experience")}
             </motion.p>
 
             {/* Info Grid */}
