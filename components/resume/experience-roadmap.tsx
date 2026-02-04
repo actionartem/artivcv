@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { useLanguage } from "@/lib/language-context"
 import { motion, useInView } from "framer-motion"
 import { Building2, ChevronRight, Clock, Briefcase } from "lucide-react"
+import Image from "next/image"
 import { ExperienceModal } from "./experience-modal"
 
 const experiences = [
@@ -11,6 +12,7 @@ const experiences = [
     id: 1,
     company: "HeadPoint",
     companyEn: "HeadPoint",
+    logo: "/HP.png",
     role: "Руководитель продукта/проекта",
     roleEn: "Product/Project Manager",
     period: "Октябрь 2024 — сейчас",
@@ -68,6 +70,7 @@ In InOne, my area of responsibility as a product manager:
     id: 2,
     company: "Миллениал Групп",
     companyEn: "Millennial Group",
+    logo: "/MG.png",
     role: "Руководитель продукта",
     roleEn: "Product Manager",
     period: "Октябрь 2022 — Сентябрь 2024",
@@ -119,6 +122,7 @@ Also while working at this company, there was a separate project that I launched
     id: 3,
     company: "Kremlin Store",
     companyEn: "Kremlin Store",
+    logo: "/KS.png",
     role: "IT Project manager",
     roleEn: "IT Project Manager",
     period: "Январь 2021 — Сентябрь 2022",
@@ -158,6 +162,7 @@ At this workplace, I dived deeper and developed very well in hard skills of proj
     id: 4,
     company: "Ceramic3d",
     companyEn: "Ceramic3d",
+    logo: "/C3D.png",
     role: "Junior Project manager",
     roleEn: "Junior Project Manager",
     period: "Июнь 2016 — Сентябрь 2016",
@@ -323,7 +328,17 @@ export function ExperienceRoadmap() {
                   {/* Logo Placeholder & Company */}
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Building2 className="w-6 h-6 text-primary" />
+                      {exp.logo ? (
+                        <Image
+                          src={exp.logo}
+                          alt={t(exp.company, exp.companyEn)}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 object-contain"
+                        />
+                      ) : (
+                        <Building2 className="w-6 h-6 text-primary" />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-foreground text-lg truncate">
