@@ -20,14 +20,12 @@ const hardSkills = [
   { ru: "Юнит-экономика", en: "Unit Economics" },
   { ru: "Customer Development", en: "Customer Development" },
   { ru: "SQL / Аналитические запросы", en: "SQL / Analytical Queries" },
-  { ru: "Stakeholder Management", en: "Stakeholder Management" },
 ]
 
 const softSkills = [
   { ru: "Лидерство", en: "Leadership" },
   { ru: "Коммуникация", en: "Communication" },
   { ru: "Переговоры", en: "Negotiation" },
-  { ru: "Эмпатия", en: "Empathy" },
   { ru: "Критическое мышление", en: "Critical Thinking" },
   { ru: "Адаптивность", en: "Adaptability" },
   { ru: "Принятие решений", en: "Decision Making" },
@@ -35,7 +33,6 @@ const softSkills = [
   { ru: "Презентации", en: "Presentations" },
   { ru: "Фасилитация", en: "Facilitation" },
   { ru: "Разрешение конфликтов", en: "Conflict Resolution" },
-  { ru: "Эмоциональный интеллект", en: "Emotional Intelligence" },
   { ru: "Системное мышление", en: "Systems Thinking" },
   { ru: "Делегирование", en: "Delegation" },
   { ru: "Кросс-функциональное взаимодействие", en: "Cross-functional Collaboration" },
