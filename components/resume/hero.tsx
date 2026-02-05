@@ -296,46 +296,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Photo Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="order-1 lg:order-2 flex justify-center"
-          >
-            <div className="relative">
-              {/* Decorative rings */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-4 rounded-full border border-dashed border-primary/20"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-8 rounded-full border border-dashed border-primary/10"
-              />
-              
-              {/* Photo container */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-dashed border-primary/30 flex items-center justify-center overflow-hidden group"
-              >
-                <Image
-                  src="/sdf.jpg"
-                  alt={t("Фото Артёма", "Artem photo")}
-                  fill
-                  sizes="(min-width: 1024px) 24rem, (min-width: 640px) 20rem, 16rem"
-                  className="object-cover"
-                  priority
-                />
-                
-                {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
-
-            </div>
-          </motion.div>
+          
         </div>
       </div>
 
