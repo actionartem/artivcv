@@ -1,0 +1,16 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="24" fill="#E6F7F1"/>
+  <rect x="10" y="10" width="108" height="108" rx="20" stroke="#B9E9D7" stroke-width="4"/>
+  <text
+    x="64"
+    y="76"
+    text-anchor="middle"
+    font-family="Inter, Arial, sans-serif"
+    font-size="40"
+    font-weight="700"
+    fill="#0F9D73"
+    letter-spacing="2"
+  >
+    УРФУ
+  </text>
+</svg>
