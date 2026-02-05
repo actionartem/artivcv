@@ -2,6 +2,7 @@
 
 import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
+import Image from "next/image"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Send, Briefcase, Calendar, ChevronDown } from "lucide-react"
 import { useRef, useState } from "react"
