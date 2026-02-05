@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2 } from "lucide-react"
