@@ -138,13 +138,12 @@ export function Hero() {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Content */}
+        <div className="flex justify-center items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
+            className="flex w-full max-w-3xl flex-col items-center text-center"
           >
             {/* Status Badge */}
             <motion.div
@@ -183,7 +182,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="grid grid-cols-2 gap-4 mb-8"
+              className="grid w-full grid-cols-1 gap-4 mb-8 sm:grid-cols-2"
             >
               <div className="flex items-center gap-3 p-3 rounded-xl bg-card/50 border border-border hover:border-primary/30 transition-colors group">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
@@ -217,7 +216,7 @@ export function Hero() {
                 <Briefcase className="w-4 h-4" />
                 {t("Формат работы", "Work format")}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-center gap-2">
                 {workFormats.map((format, index) => (
                   <motion.span
                     key={format.ru}
@@ -238,7 +237,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex flex-wrap gap-3"
+              className="flex flex-wrap justify-center gap-3"
             >
               {contacts.map((contact, index) => {
                 const className =
