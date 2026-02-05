@@ -10,14 +10,16 @@ const languages = [
     nameEn: "Russian",
     levelRu: "Родной",
     levelEn: "Native",
-    flag: "🇷🇺",
+    flagPath: "/flags/ru.svg",
+    flagAlt: "Флаг России",
   },
   {
     nameRu: "Английский",
     nameEn: "English",
     levelRu: "B2",
     levelEn: "B2 — Upper-Intermediate",
-    flag: "🇬🇧",
+    flagPath: "/flags/gb.svg",
+    flagAlt: "Флаг Великобритании",
   },
 ]
 
@@ -60,8 +62,13 @@ export function LanguagesSection() {
             >
               <div className="flex items-center gap-4">
                 {/* Flag */}
-                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-2xl">
-                  {lang.flag}
+                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center">
+                  <img
+                    src={lang.flagPath}
+                    alt={lang.flagAlt}
+                    className="w-8 h-8 object-cover rounded"
+                    loading="lazy"
+                  />
                 </div>
 
                 <div className="flex-1">
