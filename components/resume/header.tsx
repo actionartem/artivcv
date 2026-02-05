@@ -108,7 +108,12 @@ export function Header() {
               }`}
               aria-label="Русский"
             >
-              🇷🇺
+              <img
+                src="/flags/ru.svg"
+                alt="Флаг России"
+                className="w-4 h-4 object-cover"
+                loading="lazy"
+              />
             </button>
             <button
               onClick={() => setLanguage("en")}
@@ -117,7 +122,12 @@ export function Header() {
               }`}
               aria-label="English"
             >
-              🇬🇧
+              <img
+                src="/flags/gb.svg"
+                alt="Флаг Великобритании"
+                className="w-4 h-4 object-cover"
+                loading="lazy"
+              />
             </button>
           </div>
 
