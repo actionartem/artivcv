@@ -21,6 +21,7 @@ const experiences = [
     durationEn: "1 year 5 months",
     yearStart: 2024,
     yearEnd: 2026,
+    website: "https://head-point.ru/",
     descriptionRu: `Я работаю на проекте ГИС ЕЦХД (государственная информационная система единый центр хранения и обработки данных).
 
 -Веду полный цикл проектов: получение требований , оценка, планирование, постановка, контроль, тестирование, релиз.
@@ -79,6 +80,7 @@ In InOne, my area of responsibility as a product manager:
     durationEn: "2 years",
     yearStart: 2022,
     yearEnd: 2024,
+    website: "https://millenial.group/",
     descriptionRu: `Платформа онлайн-услуг: консультации (юристы / психологи / ветеринары).
 
 На данном месте работы я начинал как менеджер проектов, но спустя 3 месяца был поставлен на роль руководителя продукта, благодаря своей инициативе и предоставленному плану развития для выхода на рынок b2c.
@@ -131,6 +133,7 @@ Also while working at this company, there was a separate project that I launched
     durationEn: "1 year 9 months",
     yearStart: 2021,
     yearEnd: 2022,
+    website: "https://kinostore.ru/",
     descriptionRu: `E-commerce (веб-продукт).
 
 -Запустил личный кабинет (разработал с нуля идею и все сценарии работы кабинета) с
@@ -171,6 +174,7 @@ At this workplace, I dived deeper and developed very well in hard skills of proj
     durationEn: "4 months",
     yearStart: 2016,
     yearEnd: 2016,
+    website: "https://ru.ceramic3d.com/",
     descriptionRu: `Компания-разработчик ПО для дизайна интерьера.
 -Организовал участие в выставках: стенд, материалы, презентации, продукт показывали
 вживую и собирали лиды.
