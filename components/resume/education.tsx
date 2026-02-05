@@ -23,7 +23,7 @@ export function Education() {
   const { t } = useLanguage()
 
   return (
-    <section id="education" className="relative py-24 overflow-hidden">
+    <section id="education" className="relative pt-24 pb-12 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-background" />
 
@@ -63,7 +63,7 @@ export function Education() {
                 {/* University Logo */}
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                   <img
-                    src="/logos/urfu.svg"
+                    src="/UrFULogo_U.jpg"
                     alt="УрФУ"
                     className="w-full h-full p-2 object-contain"
                     loading="lazy"
