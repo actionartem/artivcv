@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2 } from "lucide-react"
@@ -12,6 +13,8 @@ export function Hero() {
       icon: Phone,
       label: "+7 (999) 559-83-22",
       copyValue: "+7 (999) 559-83-22",
+      copyLabelRu: "Телефон скопирован",
+      copyLabelEn: "Phone copied",
     },
     {
       icon: Send,
@@ -22,14 +25,17 @@ export function Hero() {
       icon: Mail,
       label: "prmgartiv@gmail.com",
       copyValue: "prmgartiv@gmail.com",
+      copyLabelRu: "Почта скопирована",
+      copyLabelEn: "Email copied",
     },
   ]
 
-  const handleCopy = async (value: string) => {
+  const handleCopy = async (value: string, messageRu: string, messageEn: string) => {
     if (typeof navigator === "undefined") return
 
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(value)
+      toast({ description: t(messageRu, messageEn) })
       return
     }
 
@@ -41,6 +47,7 @@ export function Hero() {
     textarea.select()
     document.execCommand("copy")
     document.body.removeChild(textarea)
+    toast({ description: t(messageRu, messageEn) })
   }
 
   const workFormats = [
@@ -223,7 +230,13 @@ export function Hero() {
                     <motion.button
                       key={contact.label}
                       type="button"
-                      onClick={() => handleCopy(contact.copyValue)}
+                      onClick={() =>
+                        handleCopy(
+                          contact.copyValue,
+                          contact.copyLabelRu ?? "Скопировано",
+                          contact.copyLabelEn ?? "Copied",
+                        )
+                      }
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1 + index * 0.1 }}

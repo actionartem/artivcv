@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { Phone, Mail, Send, MapPin, Briefcase, MessageCircle } from "lucide-react"
@@ -11,6 +12,8 @@ const contacts = [
     labelEn: "Phone",
     value: "+7 (999) 559-83-22",
     copyValue: "+7 (999) 559-83-22",
+    copyLabelRu: "Телефон скопирован",
+    copyLabelEn: "Phone copied",
   },
   {
     icon: Send,
@@ -25,6 +28,8 @@ const contacts = [
     labelEn: "Email",
     value: "prmgartiv@gmail.com",
     copyValue: "prmgartiv@gmail.com",
+    copyLabelRu: "Почта скопирована",
+    copyLabelEn: "Email copied",
   },
 ]
 
@@ -37,11 +42,12 @@ const workFormats = [
 export function Contacts() {
   const { t } = useLanguage()
 
-  const handleCopy = async (value: string) => {
+  const handleCopy = async (value: string, messageRu: string, messageEn: string) => {
     if (typeof navigator === "undefined") return
 
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(value)
+      toast({ description: t(messageRu, messageEn) })
       return
     }
 
@@ -53,6 +59,7 @@ export function Contacts() {
     textarea.select()
     document.execCommand("copy")
     document.body.removeChild(textarea)
+    toast({ description: t(messageRu, messageEn) })
   }
 
   return (
@@ -113,7 +120,13 @@ export function Contacts() {
                     <motion.button
                       key={contact.value}
                       type="button"
-                      onClick={() => handleCopy(contact.copyValue)}
+                      onClick={() =>
+                        handleCopy(
+                          contact.copyValue,
+                          contact.copyLabelRu ?? "Скопировано",
+                          contact.copyLabelEn ?? "Copied",
+                        )
+                      }
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
