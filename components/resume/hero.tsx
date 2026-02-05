@@ -4,6 +4,7 @@ import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2 } from "lucide-react"
+import { useRef, useState } from "react"
 
 export function Hero() {
   const { t } = useLanguage()
@@ -30,24 +31,41 @@ export function Hero() {
     },
   ]
 
-  const handleCopy = async (value: string, messageRu: string, messageEn: string) => {
+  const [copiedKey, setCopiedKey] = useState<string | null>(null)
+  const [copiedMessage, setCopiedMessage] = useState<string | null>(null)
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const handleCopy = async (
+    value: string,
+    messageRu: string,
+    messageEn: string,
+    key: string,
+  ) => {
     if (typeof navigator === "undefined") return
 
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(value)
-      toast({ description: t(messageRu, messageEn) })
-      return
+    } else {
+      const textarea = document.createElement("textarea")
+      textarea.value = value
+      textarea.style.position = "fixed"
+      textarea.style.opacity = "0"
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand("copy")
+      document.body.removeChild(textarea)
     }
 
-    const textarea = document.createElement("textarea")
-    textarea.value = value
-    textarea.style.position = "fixed"
-    textarea.style.opacity = "0"
-    document.body.appendChild(textarea)
-    textarea.select()
-    document.execCommand("copy")
-    document.body.removeChild(textarea)
-    toast({ description: t(messageRu, messageEn) })
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current)
+    }
+
+    setCopiedKey(key)
+    setCopiedMessage(t(messageRu, messageEn))
+    copyTimeoutRef.current = setTimeout(() => {
+      setCopiedKey(null)
+      setCopiedMessage(null)
+    }, 1800)
   }
 
   const workFormats = [
@@ -235,6 +253,7 @@ export function Hero() {
                           contact.copyValue,
                           contact.copyLabelRu ?? "Скопировано",
                           contact.copyLabelEn ?? "Copied",
+                          contact.label,
                         )
                       }
                       initial={{ opacity: 0, y: 20 }}
@@ -242,10 +261,15 @@ export function Hero() {
                       transition={{ delay: 1 + index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className={className}
+                      className={`${className} relative`}
                     >
                       <contact.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
                       <span className="text-sm font-medium text-foreground">{contact.label}</span>
+                      {copiedKey === contact.label && copiedMessage ? (
+                        <span className="absolute -top-2 right-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-medium text-primary-foreground shadow-sm">
+                          {copiedMessage}
+                        </span>
+                      ) : null}
                     </motion.button>
                   )
                 }
