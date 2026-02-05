@@ -106,16 +106,18 @@ export function Header() {
               className={`relative z-10 px-3 py-1 text-sm font-medium rounded-full transition-colors ${
                 language === "ru" ? "text-primary-foreground" : "text-muted-foreground"
               }`}
+              aria-label="Русский"
             >
-              RU
+              🇷🇺
             </button>
             <button
               onClick={() => setLanguage("en")}
               className={`relative z-10 px-3 py-1 text-sm font-medium rounded-full transition-colors ${
                 language === "en" ? "text-primary-foreground" : "text-muted-foreground"
               }`}
+              aria-label="English"
             >
-              EN
+              🇬🇧
             </button>
           </div>
 

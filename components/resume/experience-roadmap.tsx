@@ -223,7 +223,7 @@ export function ExperienceRoadmap() {
     <section
       ref={sectionRef}
       id="experience"
-      className="relative py-24 overflow-hidden"
+      className="relative py-16 overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 grid-pattern opacity-20" />

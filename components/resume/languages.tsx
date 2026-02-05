@@ -15,7 +15,7 @@ const languages = [
   {
     nameRu: "Английский",
     nameEn: "English",
-    levelRu: "B2 — Средне-продвинутый",
+    levelRu: "B2",
     levelEn: "B2 — Upper-Intermediate",
     flag: "🇬🇧",
   },
@@ -25,7 +25,7 @@ export function LanguagesSection() {
   const { t } = useLanguage()
 
   return (
-    <section id="languages" className="relative py-24 overflow-hidden">
+    <section id="languages" className="relative py-16 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
