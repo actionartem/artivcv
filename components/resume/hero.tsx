@@ -3,7 +3,7 @@
 import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2, ChevronDown } from "lucide-react"
+import { MapPin, Phone, Mail, Send, Briefcase, Calendar, ChevronDown } from "lucide-react"
 import { useRef, useState } from "react"
 
 export function Hero() {
@@ -295,47 +295,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Photo Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="order-1 lg:order-2 flex justify-center"
-          >
-            <div className="relative">
-              {/* Decorative rings */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-4 rounded-full border border-dashed border-primary/20"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-8 rounded-full border border-dashed border-primary/10"
-              />
-              
-              {/* Photo container */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-dashed border-primary/30 flex items-center justify-center overflow-hidden group"
-              >
-                {/* Placeholder content */}
-                <div className="text-center p-6">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Building2 className="w-10 h-10 text-primary/50" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {t("Место для фото", "Photo placeholder")}
-                  </p>
-                </div>
-                
-                {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
-
-            </div>
-          </motion.div>
+          
         </div>
       </div>
 
