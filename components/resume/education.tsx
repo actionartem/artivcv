@@ -2,21 +2,9 @@
 
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { GraduationCap, Calendar, MapPin, Building2 } from "lucide-react"
+import { GraduationCap, Calendar, MapPin } from "lucide-react"
 
 const educations = [
-  {
-    id: 1,
-    universityRu: "Уральский федеральный университет имени первого Президента России Б.Н. Ельцина",
-    universityEn: "Ural Federal University named after the first President of Russia B.N. Yeltsin",
-    cityRu: "Екатеринбург",
-    cityEn: "Yekaterinburg",
-    facultyRu: "ИГУП",
-    facultyEn: "IGUP",
-    specialtyRu: "Государственное и муниципальное управление",
-    specialtyEn: "State and Municipal Management",
-    year: "2016",
-  },
   {
     id: 2,
     universityRu: "Уральский федеральный университет имени первого Президента России Б.Н. Ельцина",
@@ -72,9 +60,14 @@ export function Education() {
               className="group p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all"
             >
               <div className="flex flex-col md:flex-row md:items-start gap-6">
-                {/* University Logo Placeholder */}
+                {/* University Logo */}
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <Building2 className="w-8 h-8 text-primary" />
+                  <img
+                    src="/logos/urfu.svg"
+                    alt="УрФУ"
+                    className="w-full h-full p-2 object-contain"
+                    loading="lazy"
+                  />
                 </div>
 
                 <div className="flex-1">
