@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Calendar, Building2, ChevronDown } from "lucide-react"
+import { X, Calendar, Building2, ChevronDown, ExternalLink } from "lucide-react"
 import { useEffect } from "react"
 import Image from "next/image"
 
@@ -21,6 +21,7 @@ interface ExperienceModalProps {
     durationEn: string
     descriptionRu: string
     descriptionEn: string
+    website?: string
   } | null
 }
 
@@ -99,6 +100,19 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
                     {t(experience.duration, experience.durationEn)}
                   </span>
                 </div>
+                {experience.website && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a
+                      href={experience.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/70 px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-secondary"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                      {t("Сайт компании", "Company site")}
+                    </a>
+                  </div>
+                )}
               </div>
               <motion.button
                 whileHover={{ scale: 1.1 }}
