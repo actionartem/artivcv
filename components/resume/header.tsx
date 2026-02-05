@@ -14,7 +14,7 @@ const navItems = [
 ]
 
 export function Header() {
-  const { language, setLanguage, t } = useLanguage()
+  const { t } = useLanguage()
   const { theme, toggleTheme } = useTheme()
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -92,44 +92,6 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Language Toggle */}
-          <div className="relative flex items-center bg-secondary/50 rounded-full p-1 border border-border">
-            <motion.div
-              className="absolute h-7 w-10 bg-primary rounded-full"
-              animate={{
-                x: language === "ru" ? 0 : 40,
-              }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            />
-            <button
-              onClick={() => setLanguage("ru")}
-              className={`relative z-10 px-3 py-1 text-sm font-medium rounded-full transition-colors ${
-                language === "ru" ? "text-primary-foreground" : "text-muted-foreground"
-              }`}
-              aria-label="Русский"
-            >
-              <img
-                src="/flags/ru.svg"
-                alt="Флаг России"
-                className="w-4 h-4 object-cover"
-                loading="lazy"
-              />
-            </button>
-            <button
-              onClick={() => setLanguage("en")}
-              className={`relative z-10 px-3 py-1 text-sm font-medium rounded-full transition-colors ${
-                language === "en" ? "text-primary-foreground" : "text-muted-foreground"
-              }`}
-              aria-label="English"
-            >
-              <img
-                src="/flags/gb.svg"
-                alt="Флаг Великобритании"
-                className="w-4 h-4 object-cover"
-                loading="lazy"
-              />
-            </button>
-          </div>
 
           {/* Theme Toggle */}
           <motion.button
