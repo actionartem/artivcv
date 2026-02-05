@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { Phone, Mail, Send, MapPin, Briefcase, MessageCircle } from "lucide-react"
@@ -10,7 +11,9 @@ const contacts = [
     labelRu: "Телефон",
     labelEn: "Phone",
     value: "+7 (999) 559-83-22",
-    href: "tel:+79995598322",
+    copyValue: "+7 (999) 559-83-22",
+    copyLabelRu: "Телефон скопирован",
+    copyLabelEn: "Phone copied",
   },
   {
     icon: Send,
@@ -23,8 +26,10 @@ const contacts = [
     icon: Mail,
     labelRu: "Email",
     labelEn: "Email",
-    value: "actionartem@gmail.com",
-    href: "mailto:actionartem@gmail.com",
+    value: "prmgartiv@gmail.com",
+    copyValue: "prmgartiv@gmail.com",
+    copyLabelRu: "Почта скопирована",
+    copyLabelEn: "Email copied",
   },
 ]
 
@@ -36,6 +41,26 @@ const workFormats = [
 
 export function Contacts() {
   const { t } = useLanguage()
+
+  const handleCopy = async (value: string, messageRu: string, messageEn: string) => {
+    if (typeof navigator === "undefined") return
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value)
+      toast({ description: t(messageRu, messageEn) })
+      return
+    }
+
+    const textarea = document.createElement("textarea")
+    textarea.value = value
+    textarea.style.position = "fixed"
+    textarea.style.opacity = "0"
+    document.body.appendChild(textarea)
+    textarea.select()
+    document.execCommand("copy")
+    document.body.removeChild(textarea)
+    toast({ description: t(messageRu, messageEn) })
+  }
 
   return (
     <section id="contacts" className="relative py-24 overflow-hidden">
@@ -86,31 +111,69 @@ export function Contacts() {
           >
             {/* Contact Grid */}
             <div className="grid sm:grid-cols-3 gap-6 mb-8">
-              {contacts.map((contact, index) => (
-                <motion.a
-                  key={contact.value}
-                  href={contact.href}
-                  target={contact.href.startsWith("http") ? "_blank" : undefined}
-                  rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group p-6 rounded-2xl bg-secondary/50 border border-border hover:border-primary/30 hover:bg-primary/5 transition-all text-center"
-                >
-                  <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all">
-                    <contact.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-1">
-                    {t(contact.labelRu, contact.labelEn)}
-                  </p>
-                  <p className="font-medium text-foreground text-sm truncate">
-                    {contact.value}
-                  </p>
-                </motion.a>
-              ))}
+              {contacts.map((contact, index) => {
+                const className =
+                  "group p-6 rounded-2xl bg-secondary/50 border border-border hover:border-primary/30 hover:bg-primary/5 transition-all text-center"
+
+                if (contact.copyValue) {
+                  return (
+                    <motion.button
+                      key={contact.value}
+                      type="button"
+                      onClick={() =>
+                        handleCopy(
+                          contact.copyValue,
+                          contact.copyLabelRu ?? "Скопировано",
+                          contact.copyLabelEn ?? "Copied",
+                        )
+                      }
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ scale: 1.05, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={className}
+                    >
+                      <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                        <contact.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        {t(contact.labelRu, contact.labelEn)}
+                      </p>
+                      <p className="font-medium text-foreground text-sm truncate">
+                        {contact.value}
+                      </p>
+                    </motion.button>
+                  )
+                }
+
+                return (
+                  <motion.a
+                    key={contact.value}
+                    href={contact.href}
+                    target={contact.href?.startsWith("http") ? "_blank" : undefined}
+                    rel={contact.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={className}
+                  >
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+                      <contact.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {t(contact.labelRu, contact.labelEn)}
+                    </p>
+                    <p className="font-medium text-foreground text-sm truncate">
+                      {contact.value}
+                    </p>
+                  </motion.a>
+                )
+              })}
             </div>
 
             {/* Location & Work Format */}

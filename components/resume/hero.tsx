@@ -1,5 +1,6 @@
 "use client"
 
+import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
 import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2 } from "lucide-react"
@@ -11,7 +12,9 @@ export function Hero() {
     {
       icon: Phone,
       label: "+7 (999) 559-83-22",
-      href: "tel:+79995598322",
+      copyValue: "+7 (999) 559-83-22",
+      copyLabelRu: "Телефон скопирован",
+      copyLabelEn: "Phone copied",
     },
     {
       icon: Send,
@@ -20,10 +23,32 @@ export function Hero() {
     },
     {
       icon: Mail,
-      label: "actionartem@gmail.com",
-      href: "mailto:actionartem@gmail.com",
+      label: "prmgartiv@gmail.com",
+      copyValue: "prmgartiv@gmail.com",
+      copyLabelRu: "Почта скопирована",
+      copyLabelEn: "Email copied",
     },
   ]
+
+  const handleCopy = async (value: string, messageRu: string, messageEn: string) => {
+    if (typeof navigator === "undefined") return
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(value)
+      toast({ description: t(messageRu, messageEn) })
+      return
+    }
+
+    const textarea = document.createElement("textarea")
+    textarea.value = value
+    textarea.style.position = "fixed"
+    textarea.style.opacity = "0"
+    document.body.appendChild(textarea)
+    textarea.select()
+    document.execCommand("copy")
+    document.body.removeChild(textarea)
+    toast({ description: t(messageRu, messageEn) })
+  }
 
   const workFormats = [
     { ru: "удалённо", en: "remote" },
@@ -196,23 +221,53 @@ export function Hero() {
               transition={{ delay: 0.9 }}
               className="flex flex-wrap gap-3"
             >
-              {contacts.map((contact, index) => (
-                <motion.a
-                  key={contact.label}
-                  href={contact.href}
-                  target={contact.href.startsWith("http") ? "_blank" : undefined}
-                  rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + index * 0.1 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center gap-2 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all group"
-                >
-                  <contact.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
-                  <span className="text-sm font-medium text-foreground">{contact.label}</span>
-                </motion.a>
-              ))}
+              {contacts.map((contact, index) => {
+                const className =
+                  "flex items-center gap-2 px-4 py-3 rounded-xl bg-card border border-border hover:border-primary/50 hover:bg-primary/5 transition-all group"
+
+                if (contact.copyValue) {
+                  return (
+                    <motion.button
+                      key={contact.label}
+                      type="button"
+                      onClick={() =>
+                        handleCopy(
+                          contact.copyValue,
+                          contact.copyLabelRu ?? "Скопировано",
+                          contact.copyLabelEn ?? "Copied",
+                        )
+                      }
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1 + index * 0.1 }}
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={className}
+                    >
+                      <contact.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+                      <span className="text-sm font-medium text-foreground">{contact.label}</span>
+                    </motion.button>
+                  )
+                }
+
+                return (
+                  <motion.a
+                    key={contact.label}
+                    href={contact.href}
+                    target={contact.href?.startsWith("http") ? "_blank" : undefined}
+                    rel={contact.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={className}
+                  >
+                    <contact.icon className="w-4 h-4 text-primary group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium text-foreground">{contact.label}</span>
+                  </motion.a>
+                )
+              })}
             </motion.div>
           </motion.div>
 
