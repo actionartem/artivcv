@@ -3,7 +3,7 @@
 import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2 } from "lucide-react"
+import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2, ChevronDown } from "lucide-react"
 import { useRef, useState } from "react"
 
 export function Hero() {
@@ -75,7 +75,7 @@ export function Hero() {
   ]
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center py-16 overflow-hidden">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 grid-pattern opacity-30 animate-grid" />
       
@@ -338,6 +338,20 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
+
+      <motion.button
+        type="button"
+        onClick={() => {
+          const nextSection = document.getElementById("about")
+          nextSection?.scrollIntoView({ behavior: "smooth" })
+        }}
+        aria-label={t("Прокрутить ниже", "Scroll down")}
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-primary/80 hover:text-primary transition-colors"
+        animate={{ y: [0, 8, 0], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <ChevronDown className="w-6 h-6" />
+      </motion.button>
     </section>
   )
 }

@@ -16,7 +16,7 @@ export function About() {
 I launched new directions, found partners and signed contracts, improved product scenarios together with the development team and marketing, I maintain product operation support in a large government project.`
 
   return (
-    <section id="about" className="relative py-24 overflow-hidden">
+    <section id="about" className="relative py-16 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-background" />
       

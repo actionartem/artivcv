@@ -23,7 +23,7 @@ export function Education() {
   const { t } = useLanguage()
 
   return (
-    <section id="education" className="relative pt-24 pb-12 overflow-hidden">
+    <section id="education" className="relative py-16 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-background" />
 

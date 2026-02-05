@@ -53,7 +53,7 @@ export function Competencies() {
   const { t } = useLanguage()
 
   return (
-    <section id="competencies" className="relative py-24 overflow-hidden">
+    <section id="competencies" className="relative py-16 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div

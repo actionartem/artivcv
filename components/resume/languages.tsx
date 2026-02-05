@@ -25,7 +25,7 @@ export function LanguagesSection() {
   const { t } = useLanguage()
 
   return (
-    <section id="languages" className="relative pt-12 pb-24 overflow-hidden">
+    <section id="languages" className="relative py-16 overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div

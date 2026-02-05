@@ -92,7 +92,7 @@ export function Tools() {
   const currentCategory = toolCategories.find((c) => c.id === activeCategory)
 
   return (
-    <section id="tools" className="relative py-24 overflow-hidden">
+    <section id="tools" className="relative py-16 overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
