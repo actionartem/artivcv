@@ -3,7 +3,7 @@
 import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { MapPin, Phone, Mail, Send, Briefcase, Calendar, Building2, ChevronDown } from "lucide-react"
+import { MapPin, Phone, Mail, Send, Briefcase, Calendar, ChevronDown } from "lucide-react"
 import { useRef, useState } from "react"
 
 export function Hero() {
@@ -137,13 +137,12 @@ export function Hero() {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Content */}
+        <div className="flex justify-center items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
+            className="flex w-full max-w-3xl flex-col items-center text-center"
           >
             {/* Status Badge */}
             <motion.div
@@ -182,7 +181,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="grid grid-cols-2 gap-4 mb-8"
+              className="grid w-full grid-cols-1 gap-4 mb-8 sm:grid-cols-2"
             >
               <div className="flex items-center gap-3 p-3 rounded-xl bg-card/50 border border-border hover:border-primary/30 transition-colors group">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
@@ -216,7 +215,7 @@ export function Hero() {
                 <Briefcase className="w-4 h-4" />
                 {t("Формат работы", "Work format")}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap justify-center gap-2">
                 {workFormats.map((format, index) => (
                   <motion.span
                     key={format.ru}
@@ -237,7 +236,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="flex flex-wrap gap-3"
+              className="flex flex-wrap justify-center gap-3"
             >
               {contacts.map((contact, index) => {
                 const className =
@@ -295,47 +294,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Photo Placeholder */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="order-1 lg:order-2 flex justify-center"
-          >
-            <div className="relative">
-              {/* Decorative rings */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-4 rounded-full border border-dashed border-primary/20"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-8 rounded-full border border-dashed border-primary/10"
-              />
-              
-              {/* Photo container */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-dashed border-primary/30 flex items-center justify-center overflow-hidden group"
-              >
-                {/* Placeholder content */}
-                <div className="text-center p-6">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Building2 className="w-10 h-10 text-primary/50" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {t("Место для фото", "Photo placeholder")}
-                  </p>
-                </div>
-                
-                {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
-
-            </div>
-          </motion.div>
+          
         </div>
       </div>
 
