@@ -61,7 +61,7 @@ export function Header() {
         />
       </div>
 
-      <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <nav className="container mx-auto grid h-16 grid-cols-[1fr_auto_1fr] items-center px-4">
         {/* Logo / Name - clickable to top */}
         <motion.button
           onClick={() => scrollToSection("hero")}
@@ -91,7 +91,7 @@ export function Header() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2">
 
           {/* Theme Toggle */}
           <motion.button
