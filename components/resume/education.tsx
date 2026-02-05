@@ -65,7 +65,7 @@ export function Education() {
                   <img
                     src="/UrFULogo_U.jpg"
                     alt="УрФУ"
-                    className="w-full h-full p-2 object-contain"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
                 </div>

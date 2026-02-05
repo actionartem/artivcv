@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { User, Sparkles } from "lucide-react"
+import { User } from "lucide-react"
 
 export function About() {
   const { t } = useLanguage()
@@ -52,16 +52,6 @@ I launched new directions, found partners and signed contracts, improved product
             transition={{ delay: 0.2 }}
             className="relative p-8 md:p-12 rounded-3xl bg-card border border-border"
           >
-            {/* Decorative corner */}
-            <div className="absolute top-6 right-6">
-              <Sparkles className="w-6 h-6 text-primary/30" />
-            </div>
-
-            {/* Quote decoration */}
-            <div className="absolute -top-4 left-8 text-8xl text-primary/10 font-serif leading-none select-none">
-              "
-            </div>
-
             <div className="relative">
               <p className="text-lg md:text-xl text-foreground/90 leading-relaxed whitespace-pre-line">
                 {t(aboutRu, aboutEn)}
