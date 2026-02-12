@@ -210,9 +210,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mb-8"
+              className="mb-8 flex flex-col items-center"
             >
-              <p className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
+              <p className="text-sm text-muted-foreground mb-3 flex items-center justify-center gap-2 text-center">
                 <Briefcase className="w-4 h-4" />
                 {t("Формат работы", "Work format")}
               </p>
