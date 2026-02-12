@@ -33,6 +33,16 @@ const keywords = [
   "Prioritization",
   "Product Strategy",
   "Feature Development",
+  "GenAI",
+  "LLM",
+  "Prompt Engineering",
+  "RAG",
+  "AI Agents",
+  "AI Automation",
+  "Multimodal AI",
+  "Vector Search",
+  "Fine-tuning",
+  "AI Copilot",
 ]
 
 export function Marquee() {
