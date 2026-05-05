@@ -20,7 +20,7 @@ export function Footer() {
             © {currentYear} {t("Иванов Артем Антонович", "Artem Ivanov")}
           </p>
           <p>
-            {t("Руководитель продукта", "Product Manager")} • {t("Москва", "Moscow")}
+            {t("Руководитель IT проектов", "IT Project Manager")} • {t("Москва", "Moscow")}
           </p>
         </motion.div>
       </div>

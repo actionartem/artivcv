@@ -7,15 +7,17 @@ import { User } from "lucide-react"
 export function About() {
   const { t } = useLanguage()
 
-  const aboutRu = `Руководитель продукта с опытом развития B2B и B2C продуктов, запуска новых направлений и управления сложными цифровыми контурами - от коммерческих сервисов до государственных систем. Отвечаю за продукт end-to-end: стратегия, приоритизация, roadmap, delivery, запуск, эксплуатация и масштабирование.
+  const aboutRu = `Руководитель IT-проектов с опытом реализации проектов разного масштаба: от комплексных государственных контрактов до коммерческих B2B-продуктов, e-commerce, крипто-проектов и сервисов онлайн-услуг.
 
-Сильная сторона - сочетание продуктового мышления с глубокой технической вовлечённостью. Умею одинаково уверенно работать с бизнесом, заказчиком и технической командой: находить точки роста, упрощать пользовательские сценарии, снижать операционные потери и доводить инициативы до измеримого результата.
+Управляю полным жизненным циклом IT-проектов: сбор и уточнение требований, оценка, планирование, постановка задач, контроль реализации, релизы, внедрение и сопровождение. Имею технический и управленческий бэкграунд, понимаю разработку, интеграции, API, клиент-серверную и микросервисную архитектуру.
 
-За последние роли управлял кросс-функциональными командами 25+ человек, выстроил предсказуемый релизный контур, помог закрыть 800+ часов техдолга без просадки по новым обязательствам, увеличил конверсию ключевого сценария на ~25%, запускал продукты на новых рынках и выводил новые digital-продукты от идеи до коммерческой сделки и готового продукта.`
+Спроектировал и внедрил GenAI/LLM-агентов для автоматизации рабочих процессов: классификация инцидентов, создание тикетов, подготовка релизной документации, анализ данных по контуру 400 000+ камер и работа с технической документацией.`
 
-  const aboutEn = `I am a product manager with experience in developing commercial B2C and B2B services and leading large technology initiatives, including government projects. I develop products from idea to stable operation: I form vision and roadmap, prioritize backlog based on business goals and feedback, build release processes.
+  const aboutEn = `IT Project Manager with experience delivering projects of different scale: from state contracts to commercial B2B products, e-commerce, crypto projects, and online service platforms.
 
-I launched new directions, found partners and signed contracts, improved product scenarios together with the development team and marketing, I maintain product operation support in a large government project.`
+I manage the full lifecycle of IT projects: requirements, estimation, planning, task management, delivery control, releases, rollout, and support. I combine technical and managerial background with strong understanding of integrations, APIs, and distributed architectures.
+
+I designed and implemented GenAI/LLM agents to automate incident triage, ticket creation, release documentation, large-scale contour analytics, and work with technical documentation.`
 
   return (
     <section id="about" className="relative py-16 overflow-hidden">

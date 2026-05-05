@@ -25,8 +25,8 @@ export function Hero() {
     },
     {
       icon: Mail,
-      label: "prmgartiv@gmail.com",
-      copyValue: "prmgartiv@gmail.com",
+      label: "actionartem@gmail.com",
+      copyValue: "actionartem@gmail.com",
       copyLabelRu: "Почта скопирована",
       copyLabelEn: "Email copied",
     },
@@ -73,6 +73,7 @@ export function Hero() {
     { ru: "удалённо", en: "remote" },
     { ru: "гибрид", en: "hybrid" },
     { ru: "офис", en: "office" },
+    { ru: "разъездная", en: "travel" },
   ]
 
   return (
@@ -174,7 +175,7 @@ export function Hero() {
               transition={{ delay: 0.4 }}
               className="text-xl sm:text-2xl text-muted-foreground mb-6"
             >
-              {t("Руководитель продукта с опытом работы 5+ лет", "Product Manager with 5+ years of experience")}
+              {t("Руководитель IT-проектов с опытом 5+ лет", "IT Project Manager with 5+ years of experience")}
             </motion.p>
 
             {/* Info Grid */}

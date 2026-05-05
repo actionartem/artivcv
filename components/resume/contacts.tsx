@@ -27,8 +27,8 @@ const contacts = [
     icon: Mail,
     labelRu: "Email",
     labelEn: "Email",
-    value: "prmgartiv@gmail.com",
-    copyValue: "prmgartiv@gmail.com",
+    value: "actionartem@gmail.com",
+    copyValue: "actionartem@gmail.com",
     copyLabelRu: "Почта скопирована",
     copyLabelEn: "Email copied",
   },
@@ -38,6 +38,7 @@ const workFormats = [
   { ru: "удалённо", en: "remote" },
   { ru: "гибрид", en: "hybrid" },
   { ru: "офис", en: "office" },
+  { ru: "разъездная", en: "travel" },
 ]
 
 export function Contacts() {
@@ -112,8 +113,8 @@ export function Contacts() {
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             {t(
-              "Открыт к интересным предложениям и проектам",
-              "Open to interesting offers and projects"
+              "Открыт к предложениям по управлению IT-проектами",
+              "Open to IT project leadership opportunities"
             )}
           </p>
         </motion.div>
