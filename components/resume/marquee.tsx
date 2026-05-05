@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 
 const keywords = [
-  "Product Management",
+  "IT Project Management",
   "Roadmap",
   "Backlog",
   "Sprint",
@@ -22,10 +22,10 @@ const keywords = [
   "A/B Testing",
   "Retention",
   "Conversion",
-  "GTM Strategy",
+  "Risk Management",
   "Stakeholders",
   "Cross-functional",
-  "Product Vision",
+  "Project Governance",
   "Value Proposition",
   "Customer Journey",
   "Analytics",
@@ -35,7 +35,7 @@ const keywords = [
   "Feature Development",
   "GenAI",
   "LLM",
-  "Prompt Engineering",
+  "Release Management",
   "RAG",
   "AI Agents",
   "AI Automation",

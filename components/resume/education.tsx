@@ -6,6 +6,18 @@ import { GraduationCap, Calendar, MapPin } from "lucide-react"
 
 const educations = [
   {
+    id: 1,
+    universityRu: "Уральский федеральный университет имени первого Президента России Б.Н. Ельцина",
+    universityEn: "Ural Federal University named after the first President of Russia B.N. Yeltsin",
+    cityRu: "Екатеринбург",
+    cityEn: "Yekaterinburg",
+    facultyRu: "ИГУП",
+    facultyEn: "Institute of Public Administration and Entrepreneurship",
+    specialtyRu: "Государственное и муниципальное управление",
+    specialtyEn: "State and Municipal Administration",
+    year: "2016",
+  },
+  {
     id: 2,
     universityRu: "Уральский федеральный университет имени первого Президента России Б.Н. Ельцина",
     universityEn: "Ural Federal University named after the first President of Russia B.N. Yeltsin",

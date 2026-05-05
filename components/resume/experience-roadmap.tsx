@@ -13,11 +13,11 @@ const experiences = [
     company: "HeadPoint",
     companyEn: "HeadPoint",
     logo: "/HP.png",
-    role: "Руководитель продукта",
-    roleEn: "Product Lead",
+    role: "Руководитель IT проектов",
+    roleEn: "IT Project Lead",
     period: "Октябрь 2024 — настоящее время",
     periodEn: "October 2024 — present",
-    duration: "1 год и 7 месяцев",
+    duration: "1 год 8 месяцев",
     durationEn: "1 year 7 months",
     yearStart: 2024,
     yearEnd: 2026,
@@ -68,8 +68,8 @@ In InOne, my area of responsibility as a product manager:
     company: "Миллениал Групп",
     companyEn: "Millennial Group",
     logo: "/MG.png",
-    role: "Руководитель продукта",
-    roleEn: "Product Manager",
+    role: "Руководитель IT проектов",
+    roleEn: "IT Project Manager",
     period: "Октябрь 2022 — Сентябрь 2024",
     periodEn: "October 2022 — September 2024",
     duration: "2 года",
@@ -275,8 +275,8 @@ export function ExperienceRoadmap() {
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
             {t(
-              "Моя карьерная дорожная карта от Junior PM до руководителя продукта",
-              "My career roadmap from Junior PM to Product Manager"
+              "Моя карьерная дорожная карта от Junior PM до руководителя IT-проектов",
+              "My career roadmap from Junior PM to IT Project Manager"
             )}
           </p>
         </motion.div>
