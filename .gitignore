@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+
+*.tsbuildinfo
+next-env.d.ts
+pnpm-workspace.yaml
+
+.codex-dev.*.log
+dev-server*.log
+_tmp_*

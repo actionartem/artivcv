@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from "react"
 import { useLanguage } from "@/lib/language-context"
 import { motion, useInView } from "framer-motion"
-import { Building2, ChevronRight, Clock, Briefcase } from "lucide-react"
+import { Building2, ChevronRight, Clock } from "lucide-react"
 import Image from "next/image"
 import { ExperienceModal } from "./experience-modal"
+import { ProjectMatrixBackground } from "./project-matrix-background"
 
 const experiences = [
   {
@@ -247,44 +248,29 @@ export function ExperienceRoadmap() {
     <section
       ref={sectionRef}
       id="experience"
-      className="relative py-16 overflow-hidden"
+      className="experience-roadmap relative py-16 overflow-hidden"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
+      <ProjectMatrixBackground mode="experience" />
       
-      <div className="container mx-auto px-4">
+      <div className="experience-roadmap__content container mx-auto px-4">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="experience-roadmap__header text-center mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6"
-          >
-            <Briefcase className="w-4 h-4" />
-            {t("Карьерный путь", "Career Path")}
-          </motion.span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
+          <span className="experience-roadmap__eyebrow">03 / EXPERIENCE</span>
+          <h2 className="experience-roadmap__title text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-balance">
             {t("Опыт работы", "Work Experience")}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">
-            {t(
-              "Моя карьерная дорожная карта от Junior PM до руководителя IT-проектов",
-              "My career roadmap from Junior PM to IT Project Manager"
-            )}
-          </p>
         </motion.div>
 
         {/* Timeline Container */}
-        <div className="relative max-w-4xl mx-auto">
+        <div className="experience-timeline relative max-w-4xl mx-auto">
           {/* Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2">
+          <div className="experience-timeline__line absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2">
             <motion.div
               className="w-full bg-primary"
               style={{
@@ -303,16 +289,16 @@ export function ExperienceRoadmap() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative flex items-center gap-8 mb-12 ${
+              className={`experience-entry relative flex items-center gap-8 mb-12 ${
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
               {/* Timeline Node */}
               <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 z-10">
                 <motion.div
-                  className={`w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                  className={`experience-entry__node w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
                     activeIndex >= index
-                      ? "bg-primary border-primary"
+                      ? "experience-entry__node--active bg-primary border-primary"
                       : "bg-background border-border"
                   }`}
                   whileHover={{ scale: 1.3 }}
@@ -321,7 +307,7 @@ export function ExperienceRoadmap() {
 
               {/* Card */}
               <motion.div
-                className={`ml-12 md:ml-0 md:w-[calc(50%-3rem)] ${
+                className={`experience-entry__column ml-12 md:ml-0 md:w-[calc(50%-3rem)] ${
                   index % 2 === 0 ? "md:mr-auto md:pr-8" : "md:ml-auto md:pl-8"
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -334,16 +320,16 @@ export function ExperienceRoadmap() {
                   viewport={{ once: true }}
                   className="mb-3"
                 >
-                  <span className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-mono font-bold">
+                  <span className="experience-entry__year inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-mono font-bold">
                     {exp.yearStart}
                     {exp.yearEnd !== exp.yearStart && ` — ${exp.yearEnd}`}
                   </span>
                 </motion.div>
 
                 <div
-                  className={`p-6 rounded-2xl border transition-all duration-300 cursor-pointer group ${
+                  className={`experience-card p-6 rounded-2xl border transition-all duration-300 cursor-pointer group ${
                     activeIndex === index
-                      ? "bg-card border-primary/30 shadow-lg shadow-primary/5"
+                      ? "experience-card--active bg-card border-primary/30 shadow-lg shadow-primary/5"
                       : "bg-card/50 border-border hover:border-primary/20"
                   }`}
                   onClick={() => setSelectedExperience(exp)}
@@ -351,7 +337,7 @@ export function ExperienceRoadmap() {
 
                   {/* Logo Placeholder & Company */}
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="relative w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
+                    <div className="experience-card__logo relative w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 overflow-hidden shrink-0 group-hover:scale-110 transition-transform">
                       {exp.logo ? (
                         <Image
                           src={exp.logo}

@@ -47,19 +47,19 @@ const keywords = [
 
 export function Marquee() {
   return (
-    <div className="relative overflow-hidden py-6 bg-secondary/30 border-y border-border">
+    <div className="resume-marquee">
       {/* Gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10" />
+      <div className="resume-marquee__fade resume-marquee__fade--left" />
+      <div className="resume-marquee__fade resume-marquee__fade--right" />
       
       <motion.div
-        className="flex gap-8 whitespace-nowrap animate-marquee"
+        className="resume-marquee__track animate-marquee"
         style={{ width: "fit-content" }}
       >
         {[...keywords, ...keywords].map((keyword, index) => (
           <span
             key={`${keyword}-${index}`}
-            className="text-sm font-mono text-muted-foreground/60 hover:text-primary transition-colors cursor-default"
+            className="resume-marquee__item"
           >
             {keyword}
           </span>

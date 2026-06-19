@@ -2,10 +2,9 @@
 
 import { LanguageProvider } from "@/lib/language-context"
 import { ThemeProvider } from "@/lib/theme-context"
-import { Header } from "@/components/resume/header"
-import { Hero } from "@/components/resume/hero"
+import { HeroPrototype } from "@/components/resume/hero-prototype"
 import { Marquee } from "@/components/resume/marquee"
-import { About } from "@/components/resume/about"
+import { AboutDiagram } from "@/components/resume/about-diagram"
 import { ExperienceRoadmap } from "@/components/resume/experience-roadmap"
 import { Competencies } from "@/components/resume/competencies"
 import { Skills } from "@/components/resume/skills"
@@ -14,7 +13,6 @@ import { Education } from "@/components/resume/education"
 import { LanguagesSection } from "@/components/resume/languages"
 import { Contacts } from "@/components/resume/contacts"
 import { Footer } from "@/components/resume/footer"
-import { CursorFollower } from "@/components/resume/cursor-follower"
 
 export default function ResumePage() {
   return (
@@ -24,22 +22,16 @@ export default function ResumePage() {
           {/* Noise texture overlay */}
           <div className="noise-overlay" />
           
-          {/* Custom cursor */}
-          <CursorFollower />
-          
-          {/* Header with scroll progress */}
-          <Header />
-          
           {/* Main content */}
           <main>
             {/* Hero section with photo placeholder */}
-            <Hero />
+            <HeroPrototype />
             
             {/* Marquee with keywords */}
             <Marquee />
             
             {/* About me section */}
-            <About />
+            <AboutDiagram />
             
             {/* Experience roadmap with interactive timeline */}
             <ExperienceRoadmap />

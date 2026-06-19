@@ -2,6 +2,8 @@
 const nextConfig = {
   output: "export",
 
+  devIndicators: false,
+
   trailingSlash: true,
 
   typescript: {
