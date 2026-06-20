@@ -17,7 +17,7 @@ const languages = [
     nameRu: "Английский",
     nameEn: "English",
     levelRu: "B2",
-    levelEn: "B2 — Upper-Intermediate",
+    levelEn: "B2 - Upper-Intermediate",
     flagPath: "/flags/gb.svg",
     flagAlt: "Флаг Великобритании",
   },

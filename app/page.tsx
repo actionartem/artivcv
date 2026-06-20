@@ -2,15 +2,13 @@
 
 import { LanguageProvider } from "@/lib/language-context"
 import { ThemeProvider } from "@/lib/theme-context"
+import { StickyHeader } from "@/components/resume/sticky-header"
 import { HeroPrototype } from "@/components/resume/hero-prototype"
 import { Marquee } from "@/components/resume/marquee"
 import { AboutDiagram } from "@/components/resume/about-diagram"
 import { ExperienceRoadmap } from "@/components/resume/experience-roadmap"
-import { Competencies } from "@/components/resume/competencies"
-import { Skills } from "@/components/resume/skills"
-import { Tools } from "@/components/resume/tools"
+import { CompetencyTools } from "@/components/resume/competency-tools"
 import { Education } from "@/components/resume/education"
-import { LanguagesSection } from "@/components/resume/languages"
 import { Contacts } from "@/components/resume/contacts"
 import { Footer } from "@/components/resume/footer"
 
@@ -19,6 +17,8 @@ export default function ResumePage() {
     <ThemeProvider>
       <LanguageProvider>
         <div className="relative min-h-screen bg-background">
+          <StickyHeader />
+
           {/* Noise texture overlay */}
           <div className="noise-overlay" />
           
@@ -36,20 +36,11 @@ export default function ResumePage() {
             {/* Experience roadmap with interactive timeline */}
             <ExperienceRoadmap />
             
-            {/* Key competencies */}
-            <Competencies />
-            
-            {/* Hard & Soft skills */}
-            <Skills />
-            
-            {/* Tools section */}
-            <Tools />
+            {/* Competencies connected to their working tools */}
+            <CompetencyTools />
             
             {/* Education */}
             <Education />
-            
-            {/* Languages */}
-            <LanguagesSection />
             
             {/* Contacts */}
             <Contacts />

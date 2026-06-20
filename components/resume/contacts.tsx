@@ -1,10 +1,10 @@
 "use client"
 
-import { toast } from "@/hooks/use-toast"
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { Phone, Mail, Send, MapPin, Briefcase, MessageCircle } from "lucide-react"
+import { ArrowUpRight, Briefcase, Check, Copy, Mail, MapPin, Phone, Send } from "lucide-react"
 import { useRef, useState } from "react"
+import { ProjectMatrixBackground } from "./project-matrix-background"
 
 const contacts = [
   {
@@ -82,36 +82,22 @@ export function Contacts() {
   }
 
   return (
-    <section id="contacts" className="relative py-16 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background to-secondary/30" />
-      
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
+    <section id="contacts" className="contact-terminal">
+      <ProjectMatrixBackground mode="words" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+      <div className="contact-terminal__content">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="contact-terminal__header"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6"
-          >
-            <MessageCircle className="w-4 h-4" />
-            {t("Контакты", "Contacts")}
-          </motion.span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 text-balance">
+          <span>06 / CONTACT</span>
+          <h2>
             {t("Связаться со мной", "Get in Touch")}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p>
             {t(
               "Открыт к предложениям по управлению IT-проектами",
               "Open to IT project leadership opportunities"
@@ -119,20 +105,21 @@ export function Contacts() {
           </p>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          {/* Main Contact Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="p-8 md:p-12 rounded-3xl bg-card border border-border mb-8"
-          >
-            {/* Contact Grid */}
-            <div className="grid sm:grid-cols-3 gap-6 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="contact-panel"
+        >
+            <div className="contact-panel__head">
+              <span>AVAILABLE / MOSCOW</span>
+              <span>{t("Выберите удобный способ связи", "Choose a contact method")}</span>
+            </div>
+
+            <div className="contact-panel__grid">
               {contacts.map((contact, index) => {
-                const className =
-                  "group p-6 rounded-2xl bg-secondary/50 border border-border hover:border-primary/30 hover:bg-primary/5 transition-all text-center"
+                const className = "contact-method"
 
                 if (contact.copyValue) {
                   return (
@@ -151,24 +138,23 @@ export function Contacts() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05, y: -4 }}
+                      whileHover={{ y: -3 }}
                       whileTap={{ scale: 0.98 }}
-                      className={`${className} relative`}
+                      className={className}
                     >
-                      <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all">
-                        <contact.icon className="w-6 h-6 text-primary" />
+                      <div className="contact-method__icon">
+                        <contact.icon aria-hidden="true" />
                       </div>
-                      <p className="text-xs text-muted-foreground mb-1">
+                      <div className="contact-method__copy">
+                        <span>
                         {t(contact.labelRu, contact.labelEn)}
-                      </p>
-                      <p className="font-medium text-foreground text-sm truncate">
-                        {contact.value}
-                      </p>
-                      {copiedKey === contact.value && copiedMessage ? (
-                        <span className="absolute -top-2 right-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-medium text-primary-foreground shadow-sm">
-                          {copiedMessage}
                         </span>
-                      ) : null}
+                        <strong>{contact.value}</strong>
+                      </div>
+                      <span className={`contact-method__action${copiedKey === contact.value ? " is-copied" : ""}`}>
+                        {copiedKey === contact.value ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+                        {copiedKey === contact.value && copiedMessage ? copiedMessage : t("Копировать", "Copy")}
+                      </span>
                     </motion.button>
                   )
                 }
@@ -183,90 +169,60 @@ export function Contacts() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -4 }}
+                    whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.98 }}
                     className={className}
                   >
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all">
-                      <contact.icon className="w-6 h-6 text-primary" />
+                    <div className="contact-method__icon">
+                      <contact.icon aria-hidden="true" />
                     </div>
-                    <p className="text-xs text-muted-foreground mb-1">
-                      {t(contact.labelRu, contact.labelEn)}
-                    </p>
-                    <p className="font-medium text-foreground text-sm truncate">
-                      {contact.value}
-                    </p>
+                    <div className="contact-method__copy">
+                      <span>{t(contact.labelRu, contact.labelEn)}</span>
+                      <strong>{contact.value}</strong>
+                    </div>
+                    <span className="contact-method__action">
+                      <ArrowUpRight aria-hidden="true" />
+                      {t("Открыть", "Open")}
+                    </span>
                   </motion.a>
                 )
               })}
             </div>
 
-            {/* Location & Work Format */}
-            <div className="grid sm:grid-cols-2 gap-6">
-              {/* Location */}
+            <div className="contact-panel__meta">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-4 p-4 rounded-xl bg-secondary/30 border border-border"
+                className="contact-meta-card"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
+                <MapPin aria-hidden="true" />
                 <div>
-                  <p className="text-xs text-muted-foreground">{t("Город", "City")}</p>
-                  <p className="font-medium text-foreground">{t("Москва", "Moscow")}</p>
+                  <span>{t("Город", "City")}</span>
+                  <strong>{t("Москва", "Moscow")}</strong>
                 </div>
               </motion.div>
 
-              {/* Work Format */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="p-4 rounded-xl bg-secondary/30 border border-border"
+                className="contact-format-card"
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <Briefcase className="w-4 h-4 text-primary" />
-                  <p className="text-xs text-muted-foreground">
-                    {t("Формат работы", "Work format")}
-                  </p>
+                <div className="contact-format-card__title">
+                  <Briefcase aria-hidden="true" />
+                  <span>{t("Формат работы", "Work format")}</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="contact-format-card__values">
                   {workFormats.map((format) => (
-                    <span
-                      key={format.en}
-                      className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary"
-                    >
+                    <span key={format.en}>
                       {t(format.ru, format.en)}
                     </span>
                   ))}
                 </div>
               </motion.div>
             </div>
-          </motion.div>
-
-          {/* CTA Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="text-center"
-          >
-            <motion.a
-              href="https://t.me/artivtw"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-            >
-              <Send className="w-5 h-5" />
-              {t("Написать в Telegram", "Message on Telegram")}
-            </motion.a>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

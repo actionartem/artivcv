@@ -1,8 +1,10 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useLanguage } from "@/lib/language-context"
 
-const WORDS = ["СТРАТЕГИЯ", "РОАДМАП", "DELIVERY", "AI"]
+const WORDS_RU = ["СТРАТЕГИЯ", "РОАДМАП", "DELIVERY", "AI"]
+const WORDS_EN = ["STRATEGY", "ROADMAP", "DELIVERY", "AI"]
 const EXPERIENCE_WORDS = ["HeadPoint", "MillenialGroup", "KremlinStore", "Ceramic3D"]
 const GLYPHS = "01<>/{}:+#*ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const PALETTE = [
@@ -133,6 +135,7 @@ const smoothStep = (edge0: number, edge1: number, value: number) => {
 }
 
 export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode }) {
+  const { language } = useLanguage()
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -158,10 +161,9 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
     let wordCenterX = 0
     let wordCenterY = 0
     let wordGlowRadius = 260
-    let activeVisualWidth = 0
-    let activeVisualHeight = 0
     let frame = 0
     let lastRenderTime = 0
+    let isVisible = false
     let pointerX = -1000
     let pointerY = -1000
     let pointerActivity = 0
@@ -176,9 +178,7 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
       const randomY = Math.abs(Math.sin((cycleIndex + 1) * 78.233) * 12515.873) % 1
 
       if (mode === "words") {
-        activeVisualWidth = 0
-        activeVisualHeight = 0
-        const word = WORDS[wordIndex]
+        const word = (language === "ru" ? WORDS_RU : WORDS_EN)[wordIndex]
         const maxWordWidth = width * (width < 800 ? 0.86 : 0.58)
         let fontSize = Math.min(width * 0.13, 116)
         maskContext.font = `900 ${fontSize}px Inter, Arial, sans-serif`
@@ -214,12 +214,8 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
         wordCenterX = centerX
         wordCenterY = centerY
         wordGlowRadius = Math.min(width < 800 ? 390 : 560, Math.max(280, visualWidth * .82))
-        activeVisualWidth = visualWidth
-        activeVisualHeight = visualHeight
         drawWorkflowMask(maskContext, wordIndex, centerX, centerY, visualWidth, visualHeight)
       } else {
-        activeVisualWidth = 0
-        activeVisualHeight = 0
         const word = EXPERIENCE_WORDS[wordIndex]
         const sectionBounds = root.getBoundingClientRect()
         const entries = root.closest("section")?.querySelectorAll<HTMLElement>("[data-experience-card]")
@@ -261,10 +257,10 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
 
     const resize = () => {
       const bounds = root.getBoundingClientRect()
-      const ratio = Math.min(window.devicePixelRatio || 1, 2)
+      const ratio = Math.min(window.devicePixelRatio || 1, mode === "experience" ? 1.25 : 1.5)
       width = Math.max(1, Math.round(bounds.width))
       height = Math.max(1, Math.round(bounds.height))
-      cellSize = mode === "experience" ? (width < 800 ? 12 : 9) : width < 800 ? 18 : 20
+      cellSize = mode === "experience" ? (width < 800 ? 14 : 11) : width < 800 ? 18 : 20
       columns = Math.ceil(width / cellSize)
       rows = Math.ceil(height / cellSize)
       canvas.width = Math.round(width * ratio)
@@ -279,6 +275,7 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
     }
 
     const move = (event: PointerEvent) => {
+      if (!isVisible) return
       const bounds = root.getBoundingClientRect()
       pointerX = event.clientX - bounds.left
       pointerY = event.clientY - bounds.top
@@ -286,7 +283,7 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
       const previous = trail[trail.length - 1]
       if (!previous || Math.hypot(previous.x - pointerX, previous.y - pointerY) > 11) {
         trail.push({ x: pointerX, y: pointerY, life: 1 })
-        if (trail.length > 34) trail.shift()
+        if (trail.length > 16) trail.shift()
       }
     }
 
@@ -341,7 +338,13 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
     }
 
     const render = (time: number) => {
-      if (!reduceMotion && time - lastRenderTime < 33) {
+      if (!isVisible || document.hidden) {
+        lastRenderTime = time
+        frame = requestAnimationFrame(render)
+        return
+      }
+      const frameInterval = mode === "experience" ? 45 : 38
+      if (!reduceMotion && time - lastRenderTime < frameInterval) {
         frame = requestAnimationFrame(render)
         return
       }
@@ -350,7 +353,7 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
       const cycleIndex = reduceMotion ? 0 : Math.floor(time / wordDuration)
       const wordIndex = mode === "experience"
         ? getExperienceWordIndex(cycleIndex)
-        : cycleIndex % (mode === "words" ? WORDS.length : 4)
+        : cycleIndex % (mode === "words" ? WORDS_RU.length : 4)
       if (cycleIndex !== activeCycle) buildWordMask(wordIndex, cycleIndex)
       const phase = (time % wordDuration) / wordDuration
       const appear = smoothStep(0.035, 0.23, phase)
@@ -364,11 +367,12 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
       context.clearRect(0, 0, width, height)
 
       for (let index = trail.length - 1; index >= 0; index -= 1) {
-        trail[index].life -= 0.027
+        trail[index].life -= 0.04
         if (trail[index].life <= 0) trail.splice(index, 1)
       }
 
-      for (const point of trail) {
+      for (let index = Math.max(0, trail.length - 10); index < trail.length; index += 2) {
+        const point = trail[index]
         const glowColor = PALETTE[wordIndex].join(",")
         const gradient = context.createRadialGradient(point.x, point.y, 0, point.x, point.y, 190)
         gradient.addColorStop(0, `rgba(${glowColor},${point.life * 0.035})`)
@@ -396,18 +400,7 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
         wordGlowRadius * 2,
         wordGlowRadius * 2,
       )
-      if (mode === "workflows" && activeVisualWidth && activeVisualHeight) {
-        drawWorkflowMask(
-          context,
-          wordIndex,
-          wordCenterX,
-          wordCenterY,
-          activeVisualWidth,
-          activeVisualHeight,
-          `rgb(${activeColor})`,
-          wordStrength * .075,
-        )
-      } else if (mode === "words") {
+      if (mode === "words") {
         drawProjectBoard(time)
       }
 
@@ -415,19 +408,38 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
       context.textAlign = "center"
       context.textBaseline = "middle"
 
-      for (let row = 0; row < rows; row += 1) {
+      const rootBounds = root.getBoundingClientRect()
+      const visibleTop = Math.max(0, -rootBounds.top - cellSize * 2)
+      const visibleBottom = Math.min(height, window.innerHeight - rootBounds.top + cellSize * 2)
+      const firstVisibleRow = Math.max(0, Math.floor(visibleTop / cellSize))
+      const lastVisibleRow = Math.min(rows, Math.ceil(visibleBottom / cellSize))
+
+      for (let row = firstVisibleRow; row < lastVisibleRow; row += 1) {
         for (let column = 0; column < columns; column += 1) {
           const index = row * columns + column
           const x = column * cellSize + cellSize / 2
           const y = row * cellSize + cellSize / 2
           const target = wordTargets[index] || 0
           const stream = Math.max(0, 1 - Math.abs(((row - time / 95 + column * 0.37) % 18 + 18) % 18 - 3) / 3)
-          const distance = Math.hypot(x - pointerX, y - pointerY)
-          const pointerGlow = Math.max(0, 1 - distance / 170) * pointerActivity
-          const autoGlow = Math.max(0, 1 - Math.hypot(x - wordCenterX, y - wordCenterY) / wordGlowRadius) * glowStrength
+          const pointerDx = x - pointerX
+          const pointerDy = y - pointerY
+          const pointerDistanceSquared = pointerDx * pointerDx + pointerDy * pointerDy
+          const pointerGlow = pointerDistanceSquared < 28900
+            ? (1 - Math.sqrt(pointerDistanceSquared) / 170) * pointerActivity
+            : 0
+          const wordDx = x - wordCenterX
+          const wordDy = y - wordCenterY
+          const wordDistanceSquared = wordDx * wordDx + wordDy * wordDy
+          const autoGlow = wordDistanceSquared < wordGlowRadius * wordGlowRadius
+            ? (1 - Math.sqrt(wordDistanceSquared) / wordGlowRadius) * glowStrength
+            : 0
           let trailGlow = 0
           for (const point of trail) {
-            const influence = Math.max(0, 1 - Math.hypot(x - point.x, y - point.y) / 185) * point.life
+            const trailDx = x - point.x
+            const trailDy = y - point.y
+            const trailDistanceSquared = trailDx * trailDx + trailDy * trailDy
+            if (trailDistanceSquared >= 34225) continue
+            const influence = (1 - Math.sqrt(trailDistanceSquared) / 185) * point.life
             if (influence > trailGlow) trailGlow = influence
           }
           const random = ((index * 17 + Math.floor(time / 120)) % 29) / 29
@@ -457,7 +469,18 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
     }
 
     const resizeObserver = new ResizeObserver(resize)
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+        if (!isVisible) {
+          trail.length = 0
+          pointerActivity = 0
+        }
+      },
+      { rootMargin: "40px 0px" },
+    )
     resizeObserver.observe(root)
+    visibilityObserver.observe(root)
     resize()
     window.addEventListener("pointermove", move, { passive: true })
     frame = requestAnimationFrame(render)
@@ -465,36 +488,22 @@ export function ProjectMatrixBackground({ mode = "words" }: { mode?: MatrixMode 
     return () => {
       cancelAnimationFrame(frame)
       resizeObserver.disconnect()
+      visibilityObserver.disconnect()
       window.removeEventListener("pointermove", move)
     }
-  }, [mode])
+  }, [language, mode])
 
   return (
     <div
       ref={rootRef}
       className="project-matrix-background"
       aria-hidden="true"
-      style={{
-        position: "absolute",
-        zIndex: 0,
-        inset: 0,
-        overflow: "hidden",
-        pointerEvents: "none",
-        background: "radial-gradient(circle at 76% 24%, rgba(60,95,145,.08), transparent 34%), radial-gradient(circle at 84% 76%, rgba(125,75,145,.055), transparent 32%), radial-gradient(circle at 18% 68%, rgba(130,80,55,.04), transparent 30%), #030405",
-      }}
     >
       <canvas
         ref={canvasRef}
         className="project-matrix-background__canvas"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.88 }}
       />
-      <div
-        className="project-matrix-background__shade"
-        style={{
-          position: "absolute",
-          inset: 0,
-        }}
-      />
+      <div className="project-matrix-background__shade" />
     </div>
   )
 }

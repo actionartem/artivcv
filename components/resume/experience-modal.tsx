@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Calendar, Building2, ChevronDown, ExternalLink } from "lucide-react"
 import { useEffect } from "react"
 import Image from "next/image"
+import { createPortal } from "react-dom"
 
 interface ExperienceModalProps {
   isOpen: boolean
@@ -25,23 +26,55 @@ interface ExperienceModalProps {
   } | null
 }
 
+type ExperienceContentBlock =
+  | { type: "heading" | "paragraph"; text: string }
+  | { type: "list"; items: string[] }
+
+function parseExperienceContent(value: string): ExperienceContentBlock[] {
+  const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
+  const blocks: ExperienceContentBlock[] = []
+
+  for (const line of lines) {
+    if (line.startsWith("-")) {
+      const item = line.slice(1).trim()
+      const previous = blocks.at(-1)
+
+      if (previous?.type === "list") {
+        previous.items.push(item)
+      } else {
+        blocks.push({ type: "list", items: [item] })
+      }
+      continue
+    }
+
+    blocks.push({
+      type: line.endsWith(":") ? "heading" : "paragraph",
+      text: line,
+    })
+  }
+
+  return blocks
+}
+
 export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModalProps) {
   const { t } = useLanguage()
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-    }
+    if (!isOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
     return () => {
-      document.body.style.overflow = "unset"
+      document.body.style.overflow = previousOverflow
     }
   }, [isOpen])
 
-  if (!experience) return null
+  if (!experience || typeof document === "undefined") return null
 
-  return (
+  const contentBlocks = parseExperienceContent(t(experience.descriptionRu, experience.descriptionEn))
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -51,7 +84,7 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="experience-modal__backdrop"
           />
           
           {/* Modal */}
@@ -59,15 +92,19 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl md:max-h-[85vh] bg-card border border-border rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden"
+            transition={{ duration: .32, ease: [.22, 1, .36, 1] }}
+            className="experience-modal__card"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t(`Опыт работы в ${experience.company}`, `Experience at ${experience.companyEn}`)}
           >
             {/* Header */}
-            <div className="flex items-start justify-between p-6 border-b border-border">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
+            <div className="experience-modal__header">
+              <div className="experience-modal__heading">
+                <span className="experience-modal__eyebrow">EXPERIENCE / DETAIL</span>
+                <div className="experience-modal__identity">
                   {/* Logo placeholder */}
-                  <div className="relative w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 overflow-hidden shrink-0">
+                  <div className="experience-modal__logo">
                     {experience.logo ? (
                       <Image
                         src={experience.logo}
@@ -77,38 +114,38 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
                         className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Building2 className="w-6 h-6 text-primary" />
+                      <div className="experience-modal__logo-placeholder">
+                        <Building2 />
                       </div>
                     )}
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground">
+                  <div className="experience-modal__title">
+                    <h3>
                       {t(experience.company, experience.companyEn)}
                     </h3>
-                    <p className="text-primary font-medium">
+                    <p>
                       {t(experience.role, experience.roleEn)}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
+                <div className="experience-modal__meta">
+                  <span>
+                    <Calendar />
                     {t(experience.period, experience.periodEn)}
                   </span>
-                  <span className="px-2 py-0.5 rounded-full bg-secondary text-xs">
+                  <span className="experience-modal__duration">
                     {t(experience.duration, experience.durationEn)}
                   </span>
                 </div>
                 {experience.website && (
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="experience-modal__links">
                     <a
                       href={experience.website}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/70 px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-secondary"
+                      className="experience-modal__link"
                     >
-                      <ExternalLink className="h-3.5 w-3.5" />
+                      <ExternalLink />
                       {t("Сайт компании", "Company site")}
                     </a>
                   </div>
@@ -118,36 +155,52 @@ export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModal
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-secondary hover:bg-secondary/80 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                className="experience-modal__close"
+                aria-label={t("Закрыть", "Close")}
               >
-                <X className="w-5 h-5" />
+                <X />
               </motion.button>
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="prose prose-sm dark:prose-invert max-w-none">
-                <div className="whitespace-pre-wrap text-foreground/90 leading-relaxed">
-                  {t(experience.descriptionRu, experience.descriptionEn)}
-                </div>
+            <div className="experience-modal__content">
+              <div className="experience-modal__copy">
+                {contentBlocks.map((block, index) => {
+                  if (block.type === "heading") {
+                    return <h4 key={`${block.type}-${index}`}>{block.text}</h4>
+                  }
+
+                  if (block.type === "list") {
+                    return (
+                      <ul key={`${block.type}-${index}`}>
+                        {block.items.map((item, itemIndex) => (
+                          <li key={`${itemIndex}-${item}`}>{item}</li>
+                        ))}
+                      </ul>
+                    )
+                  }
+
+                  return <p key={`${block.type}-${index}`}>{block.text}</p>
+                })}
               </div>
             </div>
 
             {/* Footer */}
-            <div className="p-6 border-t border-border">
+            <div className="experience-modal__footer">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onClose}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-secondary hover:bg-secondary/80 text-foreground font-medium transition-colors"
+                className="experience-modal__collapse"
               >
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown />
                 {t("Свернуть", "Collapse")}
               </motion.button>
             </div>
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

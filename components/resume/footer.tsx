@@ -8,20 +8,19 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative py-8 border-t border-border">
-      <div className="container mx-auto px-4">
+    <footer className="resume-footer">
+      <div className="resume-footer__content">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground"
+          className="resume-footer__row"
         >
           <p>
             © {currentYear} {t("Иванов Артем Антонович", "Artem Ivanov")}
           </p>
-          <p>
-            {t("Руководитель IT проектов", "IT Project Manager")} • {t("Москва", "Moscow")}
-          </p>
+          <span>END / CV</span>
+          <p>{t("Руководитель IT проектов", "IT Project Manager")} / {t("Москва", "Moscow")}</p>
         </motion.div>
       </div>
     </footer>

@@ -2,7 +2,9 @@
 
 import { useLanguage } from "@/lib/language-context"
 import { motion } from "framer-motion"
-import { GraduationCap, Calendar, MapPin } from "lucide-react"
+import { Calendar, MapPin } from "lucide-react"
+import Image from "next/image"
+import { ProjectMatrixBackground } from "./project-matrix-background"
 
 const educations = [
   {
@@ -35,86 +37,67 @@ export function Education() {
   const { t } = useLanguage()
 
   return (
-    <section id="education" className="relative py-16 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-background" />
+    <section id="education" className="education-system">
+      <ProjectMatrixBackground mode="workflows" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+      <div className="education-system__content">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="education-system__header"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6"
-          >
-            <GraduationCap className="w-4 h-4" />
-            {t("Образование", "Education")}
-          </motion.span>
+          <span>05 / EDUCATION</span>
+          <h2>{t("Образование", "Education")}</h2>
         </motion.div>
 
-        {/* Education Cards */}
-        <div className="max-w-4xl mx-auto grid gap-6">
+        <div className="education-system__grid">
           {educations.map((edu, index) => (
             <motion.div
               key={edu.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              className="group p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all"
+              className="education-card"
             >
-              <div className="flex flex-col md:flex-row md:items-start gap-6">
-                {/* University Logo */}
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                  <img
+              <div className="education-card__topline">
+                <span>EDU / 0{index + 1}</span>
+                <strong>
+                  <Calendar aria-hidden="true" />
+                  {edu.year}
+                </strong>
+              </div>
+
+              <div className="education-card__identity">
+                <div className="education-card__logo">
+                  <Image
                     src="/UrFULogo_U.jpg"
                     alt="УрФУ"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
                   />
                 </div>
-
-                <div className="flex-1">
-                  {/* University Name */}
-                  <h3 className="text-lg font-bold text-foreground mb-2 leading-tight">
+                <div>
+                  <h3>
                     {t(edu.universityRu, edu.universityEn)}
                   </h3>
-
-                  {/* Faculty & Specialty */}
-                  <p className="text-primary font-medium mb-3">
-                    {t(edu.facultyRu, edu.facultyEn)}
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                    {t(edu.specialtyRu, edu.specialtyEn)}
-                  </p>
-
-                  {/* Meta info */}
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      {edu.year}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      {t(edu.cityRu, edu.cityEn)}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Year badge */}
-                <div className="hidden md:block">
-                  <span className="px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-mono font-bold text-sm">
-                    {edu.year}
+                  <span className="education-card__city">
+                    <MapPin aria-hidden="true" />
+                    {t(edu.cityRu, edu.cityEn)}
                   </span>
                 </div>
+              </div>
+
+              <div className="education-card__program">
+                <span>{t("Факультет", "Faculty")}</span>
+                <p>{t(edu.facultyRu, edu.facultyEn)}</p>
+              </div>
+              <div className="education-card__program">
+                <span>{t("Специальность", "Specialization")}</span>
+                <p>{t(edu.specialtyRu, edu.specialtyEn)}</p>
               </div>
             </motion.div>
           ))}

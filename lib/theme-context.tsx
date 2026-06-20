@@ -13,19 +13,27 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light")
+  const [theme, setTheme] = useState<Theme>("dark")
+  const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {
-    const root = document.documentElement
-    if (theme === "dark") {
-      root.classList.add("dark")
-    } else {
-      root.classList.remove("dark")
+    const savedTheme = window.localStorage.getItem("resume-theme")
+    if (savedTheme === "dark" || savedTheme === "light") {
+      setTheme(savedTheme)
     }
-  }, [theme])
+    setIsInitialized(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isInitialized) return
+    const root = document.documentElement
+    root.classList.toggle("dark", theme === "dark")
+    root.style.colorScheme = theme
+    window.localStorage.setItem("resume-theme", theme)
+  }, [isInitialized, theme])
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
+    setTheme((currentTheme) => currentTheme === "dark" ? "light" : "dark")
   }
 
   return (

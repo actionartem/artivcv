@@ -16,53 +16,53 @@ const experiences = [
     logo: "/HP.png",
     role: "Руководитель IT проектов",
     roleEn: "IT Project Lead",
-    period: "Октябрь 2024 — настоящее время",
-    periodEn: "October 2024 — present",
-    duration: "1 год 8 месяцев",
-    durationEn: "1 year 7 months",
+    period: "Октябрь 2024 - настоящее время",
+    periodEn: "October 2024 - present",
+    duration: "1 год 9 месяцев",
+    durationEn: "1 year 9 months",
     yearStart: 2024,
     yearEnd: 2026,
     website: "https://head-point.ru/",
-    descriptionRu: `HeadPoint
-Москва
+    descriptionRu: `Работаю на проекте ГИС ЕЦХД - государственной информационной системе “Единый центр хранения и обработки данных”. Видеонаблюдение Москвы.
 
-Октябрь 2024 — настоящее время 1 год 7 месяцев
+-Управляю полным циклом IT-проектов: сбор и уточнение требований, оценка, планирование, постановка задач, контроль реализации, релиз и сопровождение.
+-Координирую кросс-функциональную команду 25+ человек: разработка, аналитика, тестирование, DevOps, СТП.
+-Веду коммуникации с заказчиками: регулярные статусы, фиксация договоренностей, управление ожиданиями, сроками, рисками и изменениями.
+-Отвечаю за подготовку и согласование технической, проектной и тендерной документации: СТ, ТЗ, API-описания, архитектурные материалы, ПМИ, руководства, ЧТЗ, НМЦК, паспорт проекта.
+-Управляю релизным процессом: планирование релизов, контроль готовности задач, координация тестирования и сопровождение вывода изменений в ПРОД.
+-Перестроил операционный процесс: внедрил двухнедельные спринты и план-график релизов на 12 месяцев.
+-Организовал системную работу с накопленным техническим долгом: закрыто 800+ часов без снижения темпа работ по новым контрактным обязательствам.
+-Выстроил прозрачный путь разработки: от входящих требований и оценки до реализации, тестирования и вывода изменений в ПРОД.
+-Спроектировал и внедрил агентные решения для автоматизации рабочих процессов: быстрый поиск информации по коду, задачам, технической документации и внутренней базе знаний, подготовка аналитических сводок, тикетов, релизных материалов и проектной документации.
+-Настроил безопасный локальный контур для работы с языковыми моделями и агентными сценариями: работа на локальном компьютере, изолированный режим без внешнего интернет-доступа, подключение к внутренним источникам данных, настройка правил работы с контекстом, памяти и шаблонов под задачи команды.
+-Адаптировал AI-сценарии под внутреннюю предметную область проекта: разбор требований, анализ инцидентов, поиск по документации, сопоставление данных из задач и технических материалов, подготовка черновиков решений и управленческих выводов.
+-За счёт AI-автоматизации ускорил подготовку аналитики, документации, разбор инцидентов и поиск информации по проекту. Это повысило скорость реакции команды, снизило ручную нагрузку и улучшило качество проработки задач.
 
-Руководитель продукта
+Дополнительное направление - B2B-продукт InOne:
 
-Проект: ГИС ЕЦХД (государственная информационная система "Единый центр хранения и обработки данных")
+-Отвечаю за развитие B2B-продукта InOne: формирую видение, приоритеты и roadmap совместно с бизнесом и разработкой.
+-Управляю бэклогом и приоритизацией: балансирую развитие продукта, поддержку текущих проектов и задачи, влияющие на продажи и скорость внедрений.
+-Участвую в пресейлах и пилотах продукта: прорабатываю типовые сценарии, демонстрационные кейсы и варианты внедрения для клиентов.`,
+    descriptionEn: `I work on GIS ECHD, the state information system Unified Center for Data Storage and Processing. Moscow video surveillance.
 
-1. Выстроил предсказуемый контур поставки продукта для заказчика: перевёл команду на 2-недельные спринты и сформировал годовой план релизов, что сделало сроки и релизную нагрузку управляемыми.
+-I manage the full IT project cycle: gathering and clarifying requirements, estimation, planning, task assignment, implementation control, release, and support.
+-I coordinate a cross-functional team of 25+ people across development, analytics, QA, DevOps, and technical support.
+-I communicate with customers through regular status updates, documented agreements, and management of expectations, timelines, risks, and changes.
+-I prepare and coordinate technical, project, and tender documentation: specifications, API descriptions, architecture materials, test programs, manuals, cost justification, and project passports.
+-I manage the release process: release planning, readiness control, testing coordination, and production rollout support.
+-I rebuilt the operating process by introducing two-week sprints and a twelve-month release schedule.
+-I organized systematic technical debt reduction: more than 800 hours were completed without slowing work on new contractual commitments.
+-I established a transparent development path from incoming requirements and estimation to implementation, testing, and production rollout.
+-I designed and implemented agent solutions for process automation: fast search across code, tasks, technical documentation, and the internal knowledge base, plus preparation of analytical summaries, tickets, release materials, and project documents.
+-I configured a secure local environment for language models and agent workflows: local workstation operation, isolation without external internet access, connections to internal data sources, and task-specific context, memory, and template rules.
+-I adapted AI workflows to the project's domain: requirements analysis, incident investigation, documentation search, comparison of task and technical data, and preparation of solution drafts and management conclusions.
+-AI automation accelerated analytics, documentation, incident investigation, and project information retrieval. It improved team response time, reduced manual workload, and increased the quality of task preparation.
 
-2. Выстроил работу кросс-функциональной команды 25+ человек и сделал четкий релизный процесс: от уточнения требований и оценки до релиза в PROD.
+Additional focus - InOne B2B product:
 
-3. Снизил накопленный технический долг: обеспечил закрытие 800+ часов техдолга без просадки по новым контрактным обязательствам.
-
-4. Снизил управленческие и релизные риски в сложном гос-контуре за счёт синхронизации ожиданий заказчика, сроков, объёма работ и релизной дисциплины.
-
-5. Запустил GenAI-инициативы для ускорения операционных и аналитических процессов: автоматизировал классификацию инцидентов, создание тикетов, подготовку релизной документации и обработку данных по контуру с 400 000+ камер, что сократило долю ручной работы и ускорило разбор нестандартных кейсов.`,
-    descriptionEn: `I work on the GIS ECSD project (state information system unified center for data storage and processing).
-
--I manage the full project cycle: requirements gathering, estimation, planning, assignment, control, testing, release.
-
--I manage a cross-functional team of 25+ (dev/qa/analytics/devops/support).
-
--I build communications with customers.
-
--I maintain mandatory documentation: analytical notes, release packages, acceptance protocols, regulations.
-
--Thanks to my modernizations in project flow (for example, transition to weekly sprints, creating clear schedules for quarters and year, competent prioritization) in a year of work we closed tech debt of 800+ development hours, while not suffering on current contracts.
-
--Stabilized the release loop: weekly hotfixes, contract releases, incident management and release coordination in ITSM
-
-The company also has not only the government ECSD project, but also its own commercial b2b product InOne.
-In InOne, my area of responsibility as a product manager:
-
--Responsible for the development and packaging of the B2B product InOne: I form vision, priorities and roadmap, coordinate them with sales/implementation/development.
-
--I manage the backlog and prioritization: balance development, tech debt and support, keep focus on what affects sales and implementation speed.
-
--I participate in presales and product pilots: market requirements, typical scenarios, limitations, expectations.`,
+-I am responsible for the development of the InOne B2B product, shaping its vision, priorities, and roadmap together with business and engineering.
+-I manage the backlog and prioritization, balancing product development, support for current projects, sales impact, and implementation speed.
+-I participate in presales and product pilots, preparing typical scenarios, demonstration cases, and client implementation options.`,
   },
   {
     id: 2,
@@ -71,57 +71,29 @@ In InOne, my area of responsibility as a product manager:
     logo: "/MG.png",
     role: "Руководитель IT проектов",
     roleEn: "IT Project Manager",
-    period: "Октябрь 2022 — Сентябрь 2024",
-    periodEn: "October 2022 — September 2024",
+    period: "Октябрь 2022 - Сентябрь 2024",
+    periodEn: "October 2022 - September 2024",
     duration: "2 года",
     durationEn: "2 years",
     yearStart: 2022,
     yearEnd: 2024,
     website: "https://millenial.group/",
-    descriptionRu: `Миллениал Групп
-Москва
+    descriptionRu: `Платформа онлайн-услуг: юридические, психологические и ветеринарные консультации.
 
-Информационные технологии, системная интеграция, интернет
+-Управлял развитием платформы онлайн-услуг: анализировал пользовательские сценарии, определял точки роста, формировал backlog и roadmap продукта.
+-Координировал delivery-процессы: разработка, дизайн, маркетинг, DevOps, планирование релизов, контроль сроков и качества.
+-Развивал B2B-направление: проводил пресейлы, вел коммуникации с партнерами, согласовывал условия, сопровождал заключение контрактов и запуск совместных сценариев.
+-Совместно с командой перезапустил frontend и обновил UX ключевых пользовательских сценариев, что увеличило долю клиентов, доходящих до покупки, примерно на 25%.
+-Запустил продукт на рынках Казахстана и Аргентины: локализация, анализ юридических требований, платежная инфраструктура, поддержка и организация команды онлайн-консультантов на нужных языках.
+-Запустил с нуля заказной B2B fintech/crypto-проект - крипто-кошелек в формате Telegram Mini App: собрал команду, организовал разработку MVP, production-запуск и передачу продукта заказчику в рамках коммерческой сделки.`,
+    descriptionEn: `Online services platform providing legal, psychological, and veterinary consultations.
 
-Интернет-компания (поисковики, платежные системы, соц.сети, информационно-познавательные и развлекательные ресурсы, продвижение сайтов и прочее)
-Октябрь 2022 — Сентябрь 2024 2 года
-
-Руководитель продукта
-
-Платформа онлайн-услуг: консультации
-
-1. Вырос из project manager в product lead за счёт собственной инициативы и предложенного плана развития продукта для выхода в B2C.
-
-2. Нашёл и приоритизировал точки роста продукта через анализ пользовательских сценариев и конверсии; сформировал backlog и roadmap, сфокусированные на росте ключевых бизнес-метрик.
-
-3. Собрал единый контур product ownership и delivery: синхронизировал разработку, дизайн, маркетинг и DevOps, чтобы ускорить вывод изменений и удерживать фокус команды на бизнес-результате.
-
-4. Перезапустил фронт и обновил UX ключевого пользовательского пути, что увеличило долю пользователей, доходящих до покупки, примерно на 25%.
-
-5. Запустил продукт на новых рынках: Казахстан и Аргентина. Локализация, юридическая адаптация, платёжные сценарии, поддержка и операционная модель.
-
-6. Запустил и развивал B2B-направление: вёл пресейлы, партнёрские переговоры, согласование условий и запуск интеграций, превращая партнёрские договорённости в рабочие продуктовые сценарии.
-
-7. С нуля вывел отдельный продукт - криптокошелёк в Telegram Mini App для банковского партнёра: собрал команду, довёл решение до MVP и коммерческой сделки.`,
-    descriptionEn: `Online services platform: consultations (lawyers / psychologists / veterinarians).
-
-At this workplace, I started as a project manager, but after 3 months I was promoted to product manager role, thanks to my initiative and the development plan provided for entering the b2c market.
-
--Identified growth points: which scenarios deliver results, what we simplify in the user journey, where we lose conversion.
-
--Collected and prioritized the backlog, formed the roadmap
-
--Led the B2B direction, conducted presales and communication with partners, agreed on terms, signed contracts, launched integrations/joint scenarios.
-
--In parallel, I kept delivery: coordinated the team (development/design/marketing/devops), deadlines, releases, risks.
-
--Relaunched the frontend and updated UX, this greatly simplified and improved the customer user journey and increased the percentage (about 25%) of customers who ultimately reached the final goal on the site (making a purchase).
-
--Launched the product in new markets (Kazakhstan and Argentina): localization, legal requirements, payments, organization of support and team providing online services in the required languages.
-
--Expanded acquisition channels and accelerated growth (through product improvements and collaboration with marketing).
-
-Also while working at this company, there was a separate project that I launched from scratch - a crypto wallet in Telegram mini-app. It was a custom project from one of the partners, for a bank. I assembled a team and brought the product from the idea stage to launching MVP in production and completing a commercial deal to sell the product.`,
+-I managed the development of the online services platform: analyzed user journeys, identified growth opportunities, and built the product backlog and roadmap.
+-I coordinated delivery across development, design, marketing, and DevOps, including release planning and control of deadlines and quality.
+-I developed the B2B direction: conducted presales, communicated with partners, negotiated terms, supported contract signing, and launched joint scenarios.
+-Together with the team, I relaunched the frontend and updated the UX of key user journeys, increasing the share of customers reaching a purchase by approximately 25%.
+-I launched the product in Kazakhstan and Argentina, covering localization, legal requirements, payment infrastructure, support, and organization of multilingual online consultants.
+-I launched a custom B2B fintech and crypto project from scratch: a crypto wallet built as a Telegram Mini App. I assembled the team, organized MVP development and production launch, and transferred the product to the customer as part of a commercial deal.`,
   },
   {
     id: 3,
@@ -130,50 +102,29 @@ Also while working at this company, there was a separate project that I launched
     logo: "/KS.png",
     role: "IT Project manager",
     roleEn: "IT Project Manager",
-    period: "Январь 2021 — Сентябрь 2022",
-    periodEn: "January 2021 — September 2022",
-    duration: "1 год и 9 месяцев",
+    period: "Январь 2021 - Сентябрь 2022",
+    periodEn: "January 2021 - September 2022",
+    duration: "1 год 9 месяцев",
     durationEn: "1 year 9 months",
     yearStart: 2021,
     yearEnd: 2022,
     website: "https://kinostore.ru/",
-    descriptionRu: `Kremlin Store
-Москва
+    descriptionRu: `E-commerce / веб-продукт.
 
-Электроника, приборостроение, бытовая техника, компьютеры и оргтехника
+-Управлял развитием e-commerce веб-продукта: собирал требования от бизнеса, формировал задачи, планировал релизы и контролировал реализацию.
+-Запустил личный кабинет клиента с ключевыми сценариями: профиль пользователя, история заказов, статусы заказов и повторные покупки.
+-Спроектировал и внедрил программу лояльности, направленную на рост LTV и доли повторных покупок.
+-Выстроил процесс релизов и QA: регулярный график выпусков, документация изменений, контроль тестирования и фиксация истории релизов.
+-Взаимодействовал с бизнес-направлениями: маркетинг, продажи, операционные процессы и розничные точки.
+-Участвовал в проектах модернизации инфраструктуры: кассы, видеонаблюдение и внутренние процессы на торговых точках.`,
+    descriptionEn: `E-commerce web product.
 
-Бытовая техника, электроника, климатическое оборудование (продвижение, оптовая торговля)
-Розничная торговля
-
-Интернет-магазин
-Январь 2021 — Сентябрь 2022 1 год 9 месяцев
-
-IT Project manager
-
-E-commerce. Онлайн/офлайн магазин по продаже фото-видео аппаратуры.
-
-1. Запустил личный кабинет с нуля: сформировал концепцию, пользовательские сценарии и ключевые функции, включая статусы, историю заказов и профили.
-
-2. Спроектировал и внедрил программу лояльности, усилив продуктовую ценность для клиента и создав основу для роста LTV и повторных покупок.
-
-3. Систематизировал релизы и QA: внедрил понятный ритм релизов, документацию и прозрачную историю изменений, что повысило управляемость продукта.
-
-4. Вёл развитие e-commerce-продукта end-to-end: постановка задач, планирование релизов, поддержка, взаимодействие с маркетингом, продажами и операционным блоком.
-
-5. Участвовал в модернизации инфраструктурных процессов, связанных с точками продаж, кассовым контуром и видеонаблюдением, что усилило техническую насмотренность и системное понимание бизнеса.`,
-    descriptionEn: `E-commerce (web product).
-
--Launched personal account (developed from scratch the idea and all cabinet work scenarios) with
-key functional points (statuses, order history, profiles).
--Designed and implemented a loyalty program, which increased customer LTV and share
-of repeat purchases.
--Put releases and QA in order, made a clear release schedule with documentation and
-history of all changes.
-My role in the company implied responsibility for:
--Full cycle of web product development: task setting, release planning, support.
--Interaction with business (marketing/sales/operations).
--Infrastructure modernization projects: cash registers, video surveillance, processes at points.
-At this workplace, I dived deeper and developed very well in hard skills of project management`,
+-I managed the development of the e-commerce web product: gathered business requirements, defined tasks, planned releases, and controlled implementation.
+-I launched a customer account with key scenarios including user profiles, order history, order statuses, and repeat purchases.
+-I designed and implemented a loyalty program aimed at increasing LTV and repeat purchases.
+-I established the release and QA process with a regular delivery schedule, change documentation, testing control, and release history.
+-I worked with marketing, sales, operations, and retail teams.
+-I participated in infrastructure modernization projects involving cash registers, video surveillance, and internal retail processes.`,
   },
   {
     id: 4,
@@ -182,40 +133,25 @@ At this workplace, I dived deeper and developed very well in hard skills of proj
     logo: "/C3D.png",
     role: "Junior Project manager",
     roleEn: "Junior Project Manager",
-    period: "Июнь 2016 — Сентябрь 2016",
-    periodEn: "June 2016 — September 2016",
+    period: "Июнь 2016 - Сентябрь 2016",
+    periodEn: "June 2016 - September 2016",
     duration: "4 месяца",
     durationEn: "4 months",
     yearStart: 2016,
     yearEnd: 2016,
     website: "https://ru.ceramic3d.com/",
-    descriptionRu: `Ceramic3d
-Екатеринбург
+    descriptionRu: `Компания-разработчик ПО для дизайна интерьера.
 
-Информационные технологии, системная интеграция, интернет
+Поддерживал руководителя проекта и команду разработки: вел расписания, документооборот, закупки и коммуникации с клиентами.
+Участвовал в координации задач разработки и подготовке релизов.
+Наладил взаимодействие между отделами: помог формализовать договоренности, сроки и правила коммуникации.
+Организовывал участие компании в выставках: подготовка стенда, материалов, презентаций и демонстрация продукта потенциальным клиентам.`,
+    descriptionEn: `Interior design software company.
 
-Разработка программного обеспечения
-Июнь 2016 — Сентябрь 2016 4 месяца
-
-Junior Project manager
-
-Работал в компании-разработчике программного обеспечения для дизайна интерьера.
-
-1. Координировал внутренние процессы между командами, помогая сокращать сроки согласований.
-
-2. Участвовал в подготовке релизов, клиентских коммуникациях и операционной поддержке команды.
-
-3. Получил базу проектного управления и межфункционального взаимодействия в продуктовой разработке.`,
-    descriptionEn: `Interior design software development company.
--Organized participation in exhibitions: stand, materials, presentations, product was shown
-live and collected leads.
--Established interaction between departments: agreed on rules and deadlines, reduced
-approvals.
--Support of manager and team: schedules, document flow, procurement, communications with
-clients.
--Participation in releases and coordination of development tasks.
-
-You could say I gained basic team management skills and understanding of how everything should work to get results and product development.`,
+I supported the project manager and development team by maintaining schedules, document workflows, procurement, and client communications.
+I participated in development task coordination and release preparation.
+I improved collaboration between departments by helping formalize agreements, timelines, and communication rules.
+I organized the company's participation in exhibitions, including the stand, materials, presentations, and product demonstrations for potential customers.`,
   },
 ]
 
@@ -322,7 +258,7 @@ export function ExperienceRoadmap() {
                 >
                   <span className="experience-entry__year inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-mono font-bold">
                     {exp.yearStart}
-                    {exp.yearEnd !== exp.yearStart && ` — ${exp.yearEnd}`}
+                    {exp.yearEnd !== exp.yearStart && ` - ${exp.yearEnd}`}
                   </span>
                 </motion.div>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode } from "react"
+import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 
 type Language = "ru" | "en"
 
@@ -14,6 +14,21 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>("ru")
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  useEffect(() => {
+    const savedLanguage = window.localStorage.getItem("resume-language")
+    if (savedLanguage === "ru" || savedLanguage === "en") {
+      setLanguage(savedLanguage)
+    }
+    setIsInitialized(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isInitialized) return
+    document.documentElement.lang = language
+    window.localStorage.setItem("resume-language", language)
+  }, [isInitialized, language])
 
   const t = (ru: string, en: string) => (language === "ru" ? ru : en)
 
