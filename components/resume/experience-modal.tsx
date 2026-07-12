@@ -1,204 +1,131 @@
 "use client"
 
-import { useLanguage } from "@/lib/language-context"
-import { motion, AnimatePresence } from "framer-motion"
-import { X, Calendar, Building2, ChevronDown, ExternalLink } from "lucide-react"
-import { useEffect } from "react"
-import Image from "next/image"
+import { useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
+import Image from "next/image"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { ExternalLink, X } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
+import { localize, resumeData } from "@/lib/resume-data"
+
+type ExperienceItem = (typeof resumeData.experiences)[number]
 
 interface ExperienceModalProps {
   isOpen: boolean
   onClose: () => void
-  experience: {
-    company: string
-    companyEn: string
-    logo?: string
-    role: string
-    roleEn: string
-    period: string
-    periodEn: string
-    duration: string
-    durationEn: string
-    descriptionRu: string
-    descriptionEn: string
-    website?: string
-  } | null
+  experience: ExperienceItem | null
 }
 
-type ExperienceContentBlock =
+type ContentBlock =
   | { type: "heading" | "paragraph"; text: string }
   | { type: "list"; items: string[] }
 
-function parseExperienceContent(value: string): ExperienceContentBlock[] {
+function parseContent(value: string): ContentBlock[] {
   const lines = value.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
-  const blocks: ExperienceContentBlock[] = []
+  const blocks: ContentBlock[] = []
 
   for (const line of lines) {
     if (line.startsWith("-")) {
       const item = line.slice(1).trim()
       const previous = blocks.at(-1)
-
-      if (previous?.type === "list") {
-        previous.items.push(item)
-      } else {
-        blocks.push({ type: "list", items: [item] })
-      }
-      continue
+      if (previous?.type === "list") previous.items.push(item)
+      else blocks.push({ type: "list", items: [item] })
+    } else {
+      blocks.push({ type: line.endsWith(":") ? "heading" : "paragraph", text: line })
     }
-
-    blocks.push({
-      type: line.endsWith(":") ? "heading" : "paragraph",
-      text: line,
-    })
   }
 
   return blocks
 }
 
 export function ExperienceModal({ isOpen, onClose, experience }: ExperienceModalProps) {
-  const { t } = useLanguage()
+  const { language, t } = useLanguage()
+  const reduceMotion = useReducedMotion()
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (!isOpen) return
-
     const previousOverflow = document.body.style.overflow
+    const previousFocus = document.activeElement as HTMLElement | null
     document.body.style.overflow = "hidden"
+    closeRef.current?.focus()
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        onClose()
+        return
+      }
+
+      if (event.key !== "Tab" || !dialogRef.current) return
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.body.style.overflow = previousOverflow
+      document.removeEventListener("keydown", handleKeyDown)
+      previousFocus?.focus()
     }
-  }, [isOpen])
+  }, [isOpen, onClose])
 
-  if (!experience || typeof document === "undefined") return null
+  if (typeof document === "undefined") return null
 
-  const contentBlocks = parseExperienceContent(t(experience.descriptionRu, experience.descriptionEn))
+  const blocks = experience ? parseContent(localize(experience.description, language)) : []
 
   return createPortal(
     <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
+      {isOpen && experience && (
+        <motion.div className="experience-modal" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.2 }} onMouseDown={onClose}>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="experience-modal__backdrop"
-          />
-          
-          {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: .32, ease: [.22, 1, .36, 1] }}
-            className="experience-modal__card"
+            ref={dialogRef}
+            className="experience-modal__dialog"
             role="dialog"
             aria-modal="true"
-            aria-label={t(`Опыт работы в ${experience.company}`, `Experience at ${experience.companyEn}`)}
+            aria-labelledby="experience-modal-title"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+            transition={{ duration: reduceMotion ? 0 : 0.25 }}
+            onMouseDown={(event) => event.stopPropagation()}
           >
-            {/* Header */}
-            <div className="experience-modal__header">
-              <div className="experience-modal__heading">
-                <span className="experience-modal__eyebrow">EXPERIENCE / DETAIL</span>
-                <div className="experience-modal__identity">
-                  {/* Logo placeholder */}
-                  <div className="experience-modal__logo">
-                    {experience.logo ? (
-                      <Image
-                        src={experience.logo}
-                        alt={t(experience.company, experience.companyEn)}
-                        fill
-                        sizes="48px"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="experience-modal__logo-placeholder">
-                        <Building2 />
-                      </div>
-                    )}
-                  </div>
-                  <div className="experience-modal__title">
-                    <h3>
-                      {t(experience.company, experience.companyEn)}
-                    </h3>
-                    <p>
-                      {t(experience.role, experience.roleEn)}
-                    </p>
-                  </div>
+            <header className="experience-modal__header">
+              <div className="experience-modal__identity">
+                <div className="experience-modal__logo"><Image src={experience.logo} alt="" fill sizes="52px" /></div>
+                <div>
+                  <h2 id="experience-modal-title">{localize(experience.company, language)}</h2>
+                  <p>{localize(experience.role, language)}</p>
                 </div>
-                <div className="experience-modal__meta">
-                  <span>
-                    <Calendar />
-                    {t(experience.period, experience.periodEn)}
-                  </span>
-                  <span className="experience-modal__duration">
-                    {t(experience.duration, experience.durationEn)}
-                  </span>
-                </div>
-                {experience.website && (
-                  <div className="experience-modal__links">
-                    <a
-                      href={experience.website}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="experience-modal__link"
-                    >
-                      <ExternalLink />
-                      {t("Сайт компании", "Company site")}
-                    </a>
-                  </div>
-                )}
               </div>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={onClose}
-                className="experience-modal__close"
-                aria-label={t("Закрыть", "Close")}
-              >
-                <X />
-              </motion.button>
+              <button ref={closeRef} type="button" className="experience-modal__close" onClick={onClose} aria-label={t("Закрыть", "Close")}><X aria-hidden="true" /></button>
+            </header>
+
+            <div className="experience-modal__meta">
+              <span>{localize(experience.period, language)}</span>
+              <span>{localize(experience.duration, language)}</span>
+              <a href={experience.website} target="_blank" rel="noreferrer">{t("Сайт компании", "Company site")}<ExternalLink aria-hidden="true" /></a>
             </div>
 
-            {/* Content */}
             <div className="experience-modal__content">
-              <div className="experience-modal__copy">
-                {contentBlocks.map((block, index) => {
-                  if (block.type === "heading") {
-                    return <h4 key={`${block.type}-${index}`}>{block.text}</h4>
-                  }
-
-                  if (block.type === "list") {
-                    return (
-                      <ul key={`${block.type}-${index}`}>
-                        {block.items.map((item, itemIndex) => (
-                          <li key={`${itemIndex}-${item}`}>{item}</li>
-                        ))}
-                      </ul>
-                    )
-                  }
-
-                  return <p key={`${block.type}-${index}`}>{block.text}</p>
-                })}
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="experience-modal__footer">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={onClose}
-                className="experience-modal__collapse"
-              >
-                <ChevronDown />
-                {t("Свернуть", "Collapse")}
-              </motion.button>
+              {blocks.map((block, index) => {
+                if (block.type === "heading") return <h3 key={`${block.type}-${index}`}>{block.text}</h3>
+                if (block.type === "list") return <ul key={`${block.type}-${index}`}>{block.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                return <p key={`${block.type}-${index}`}>{block.text}</p>
+              })}
             </div>
           </motion.div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>,
     document.body,

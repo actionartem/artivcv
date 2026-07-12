@@ -1,61 +1,20 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
+import { ArrowUpRight, Check, Copy } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
-import { motion } from "framer-motion"
-import { ArrowUpRight, Briefcase, Check, Copy, Mail, MapPin, Phone, Send } from "lucide-react"
-import { useRef, useState } from "react"
-import { ProjectMatrixBackground } from "./project-matrix-background"
-
-const contacts = [
-  {
-    icon: Phone,
-    labelRu: "Телефон",
-    labelEn: "Phone",
-    value: "+7 (999) 559-83-22",
-    copyValue: "+7 (999) 559-83-22",
-    copyLabelRu: "Телефон скопирован",
-    copyLabelEn: "Phone copied",
-  },
-  {
-    icon: Send,
-    labelRu: "Telegram",
-    labelEn: "Telegram",
-    value: "@artivtw",
-    href: "https://t.me/artivtw",
-  },
-  {
-    icon: Mail,
-    labelRu: "Email",
-    labelEn: "Email",
-    value: "actionartem@gmail.com",
-    copyValue: "actionartem@gmail.com",
-    copyLabelRu: "Почта скопирована",
-    copyLabelEn: "Email copied",
-  },
-]
-
-const workFormats = [
-  { ru: "удалённо", en: "remote" },
-  { ru: "гибрид", en: "hybrid" },
-  { ru: "офис", en: "office" },
-  { ru: "разъездная", en: "travel" },
-]
+import { localize, resumeData } from "@/lib/resume-data"
 
 export function Contacts() {
-  const { t } = useLanguage()
-
+  const { language, t } = useLanguage()
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
-  const [copiedMessage, setCopiedMessage] = useState<string | null>(null)
-  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const resetRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const handleCopy = async (
-    value: string,
-    messageRu: string,
-    messageEn: string,
-    key: string,
-  ) => {
-    if (typeof navigator === "undefined") return
+  useEffect(() => () => {
+    if (resetRef.current) clearTimeout(resetRef.current)
+  }, [])
 
+  const copyContact = async (key: string, value: string) => {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(value)
     } else {
@@ -66,163 +25,36 @@ export function Contacts() {
       document.body.appendChild(textarea)
       textarea.select()
       document.execCommand("copy")
-      document.body.removeChild(textarea)
+      textarea.remove()
     }
 
-    if (copyTimeoutRef.current) {
-      clearTimeout(copyTimeoutRef.current)
-    }
-
+    if (resetRef.current) clearTimeout(resetRef.current)
     setCopiedKey(key)
-    setCopiedMessage(t(messageRu, messageEn))
-    copyTimeoutRef.current = setTimeout(() => {
-      setCopiedKey(null)
-      setCopiedMessage(null)
-    }, 1800)
+    resetRef.current = setTimeout(() => setCopiedKey(null), 1800)
   }
 
   return (
-    <section id="contacts" className="contact-terminal">
-      <ProjectMatrixBackground mode="words" />
+    <section id="contacts" className="section contacts-section" aria-labelledby="contacts-title">
+      <div className="section__inner contacts-section__layout">
+        <div className="contacts-section__heading">
+          <h2 id="contacts-title">{t("Давайте обсудим задачу", "Let’s discuss the role")}</h2>
+          <p>{t("Открыт к предложениям по управлению IT-проектами. Москва, удалённый, гибридный или офисный формат.", "Open to IT project management opportunities in Moscow, remote, hybrid, or office formats.")}</p>
+        </div>
 
-      <div className="contact-terminal__content">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="contact-terminal__header"
-        >
-          <span>06 / CONTACT</span>
-          <h2>
-            {t("Связаться со мной", "Get in Touch")}
-          </h2>
-          <p>
-            {t(
-              "Открыт к предложениям по управлению IT-проектами",
-              "Open to IT project leadership opportunities"
-            )}
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="contact-panel"
-        >
-            <div className="contact-panel__head">
-              <span>AVAILABLE / MOSCOW</span>
-              <span>{t("Выберите удобный способ связи", "Choose a contact method")}</span>
+        <div className="contact-list">
+          {resumeData.contacts.map((contact) => (
+            <div className="contact-row" key={contact.id}>
+              <span>{localize(contact.label, language)}</span>
+              <a href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined} rel={contact.href.startsWith("http") ? "noreferrer" : undefined}>
+                {contact.value}<ArrowUpRight aria-hidden="true" />
+              </a>
+              <button type="button" onClick={() => copyContact(contact.id, contact.copyValue)} aria-label={t(`Скопировать ${localize(contact.label, language)}`, `Copy ${localize(contact.label, language)}`)}>
+                {copiedKey === contact.id ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+                <span aria-live="polite">{copiedKey === contact.id ? t("Скопировано", "Copied") : t("Копировать", "Copy")}</span>
+              </button>
             </div>
-
-            <div className="contact-panel__grid">
-              {contacts.map((contact, index) => {
-                const className = "contact-method"
-
-                if (contact.copyValue) {
-                  return (
-                    <motion.button
-                      key={contact.value}
-                      type="button"
-                      onClick={() =>
-                        handleCopy(
-                          contact.copyValue,
-                          contact.copyLabelRu ?? "Скопировано",
-                          contact.copyLabelEn ?? "Copied",
-                          contact.value,
-                        )
-                      }
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={className}
-                    >
-                      <div className="contact-method__icon">
-                        <contact.icon aria-hidden="true" />
-                      </div>
-                      <div className="contact-method__copy">
-                        <span>
-                        {t(contact.labelRu, contact.labelEn)}
-                        </span>
-                        <strong>{contact.value}</strong>
-                      </div>
-                      <span className={`contact-method__action${copiedKey === contact.value ? " is-copied" : ""}`}>
-                        {copiedKey === contact.value ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
-                        {copiedKey === contact.value && copiedMessage ? copiedMessage : t("Копировать", "Copy")}
-                      </span>
-                    </motion.button>
-                  )
-                }
-
-                return (
-                  <motion.a
-                    key={contact.value}
-                    href={contact.href}
-                    target={contact.href?.startsWith("http") ? "_blank" : undefined}
-                    rel={contact.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={className}
-                  >
-                    <div className="contact-method__icon">
-                      <contact.icon aria-hidden="true" />
-                    </div>
-                    <div className="contact-method__copy">
-                      <span>{t(contact.labelRu, contact.labelEn)}</span>
-                      <strong>{contact.value}</strong>
-                    </div>
-                    <span className="contact-method__action">
-                      <ArrowUpRight aria-hidden="true" />
-                      {t("Открыть", "Open")}
-                    </span>
-                  </motion.a>
-                )
-              })}
-            </div>
-
-            <div className="contact-panel__meta">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="contact-meta-card"
-              >
-                <MapPin aria-hidden="true" />
-                <div>
-                  <span>{t("Город", "City")}</span>
-                  <strong>{t("Москва", "Moscow")}</strong>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="contact-format-card"
-              >
-                <div className="contact-format-card__title">
-                  <Briefcase aria-hidden="true" />
-                  <span>{t("Формат работы", "Work format")}</span>
-                </div>
-                <div className="contact-format-card__values">
-                  {workFormats.map((format) => (
-                    <span key={format.en}>
-                      {t(format.ru, format.en)}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-        </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )

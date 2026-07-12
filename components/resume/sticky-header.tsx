@@ -1,171 +1,124 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion"
+import { Menu, X } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
-import { useTheme } from "@/lib/theme-context"
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion"
-import { Languages, Menu, Moon, Sun, X } from "lucide-react"
-
-const navItems = [
-  { id: "about", index: "02", ru: "Обо мне", en: "About" },
-  { id: "experience", index: "03", ru: "Опыт", en: "Experience" },
-  { id: "competencies", index: "04", ru: "Компетенции", en: "Capabilities" },
-  { id: "education", index: "05", ru: "Образование", en: "Education" },
-  { id: "contacts", index: "06", ru: "Контакты", en: "Contacts" },
-]
+import { localize, resumeData } from "@/lib/resume-data"
 
 export function StickyHeader() {
   const { language, setLanguage, t } = useLanguage()
-  const { theme, toggleTheme } = useTheme()
+  const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.25 })
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 32, mass: 0.25 })
   const [activeSection, setActiveSection] = useState("hero")
-  const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    let frame = 0
+    const sections = ["hero", ...resumeData.navigation.map((item) => item.id)]
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section))
 
-    const updateHeader = () => {
-      frame = 0
-      setIsScrolled(window.scrollY > 24)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible) setActiveSection(visible.target.id)
+      },
+      { rootMargin: "-24% 0px -62% 0px", threshold: [0, 0.1, 0.35] },
+    )
 
-      const viewportAnchor = window.innerHeight * 0.38
-      let currentSection = "hero"
-
-      for (const item of navItems) {
-        const section = document.getElementById(item.id)
-        if (section && section.getBoundingClientRect().top <= viewportAnchor) {
-          currentSection = item.id
-        }
-      }
-
-      setActiveSection(currentSection)
-    }
-
-    const handleScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateHeader)
-    }
-
-    updateHeader()
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    window.addEventListener("resize", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-      window.removeEventListener("resize", handleScroll)
-      if (frame) window.cancelAnimationFrame(frame)
-    }
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false)
+    }
+    document.addEventListener("keydown", closeOnEscape)
+    return () => document.removeEventListener("keydown", closeOnEscape)
+  }, [isMobileMenuOpen])
+
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" })
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    })
     setIsMobileMenuOpen(false)
   }
 
-  const activeItem = navItems.find((item) => item.id === activeSection)
-
   return (
-    <motion.header
-      initial={{ y: -72 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className={`sticky-header${isScrolled ? " is-scrolled" : ""}`}
-    >
-      <div className="sticky-header__inner">
+    <header className="site-header">
+      <div className="site-header__inner">
         <button
           type="button"
-          className="sticky-header__brand"
+          className="site-header__brand"
           onClick={() => scrollToSection("hero")}
           aria-label={t("Наверх", "Back to top")}
         >
-          <span>AI</span>
-          <strong>{t("Артем Иванов", "Artem Ivanov")}</strong>
+          <strong>{localize(resumeData.identity.name, language)}</strong>
+          <span>IT Project Manager</span>
         </button>
 
-        <nav className="sticky-header__nav" aria-label={t("Навигация по резюме", "Resume navigation")}>
-          {navItems.map((item) => (
+        <nav className="site-header__nav" aria-label={t("Навигация по резюме", "Resume navigation") }>
+          {resumeData.navigation.map((item) => (
             <button
               key={item.id}
               type="button"
               className={activeSection === item.id ? "is-active" : ""}
               onClick={() => scrollToSection(item.id)}
+              aria-current={activeSection === item.id ? "location" : undefined}
             >
-              <span>{item.index}</span>
-              {t(item.ru, item.en)}
+              {localize(item.label, language)}
             </button>
           ))}
         </nav>
 
-        <div className="sticky-header__actions">
-          <div className="sticky-header__status" aria-live="polite">
-            <span>{activeItem?.index ?? "01"}</span>
-            <strong>{activeItem ? t(activeItem.ru, activeItem.en) : t("Начало", "Start")}</strong>
+        <div className="site-header__actions">
+          <div className="language-switch" aria-label={t("Выбор языка", "Language selection") }>
+            <button type="button" className={language === "ru" ? "is-active" : ""} onClick={() => setLanguage("ru")} aria-pressed={language === "ru"}>RU</button>
+            <span aria-hidden="true">/</span>
+            <button type="button" className={language === "en" ? "is-active" : ""} onClick={() => setLanguage("en")} aria-pressed={language === "en"}>EN</button>
           </div>
-
           <button
             type="button"
-            className="sticky-header__control sticky-header__language"
-            onClick={() => setLanguage(language === "ru" ? "en" : "ru")}
-            aria-label={t("Переключить на английский", "Switch to Russian")}
-            title={t("Переключить на английский", "Switch to Russian")}
-          >
-            <Languages aria-hidden="true" />
-            <span className={language === "ru" ? "is-active" : ""}>RU</span>
-            <i>/</i>
-            <span className={language === "en" ? "is-active" : ""}>EN</span>
-          </button>
-
-          <button
-            type="button"
-            className="sticky-header__control sticky-header__theme"
-            onClick={toggleTheme}
-            aria-label={theme === "dark" ? t("Включить светлую тему", "Enable light theme") : t("Включить тёмную тему", "Enable dark theme")}
-            title={theme === "dark" ? t("Светлая тема", "Light theme") : t("Тёмная тема", "Dark theme")}
-          >
-            {theme === "dark" ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
-          </button>
-
-          <button
-            type="button"
-            className="sticky-header__menu"
-            onClick={() => setIsMobileMenuOpen((value) => !value)}
+            className="site-header__menu"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
             aria-expanded={isMobileMenuOpen}
-            aria-label={t("Открыть меню", "Open menu")}
+            aria-controls="mobile-navigation"
+            aria-label={t(isMobileMenuOpen ? "Закрыть меню" : "Открыть меню", isMobileMenuOpen ? "Close menu" : "Open menu")}
           >
             {isMobileMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
       </div>
 
-      <div className="sticky-header__progress" aria-hidden="true">
-        <motion.div style={{ scaleX: progress }} />
+      <div className="site-header__progress" aria-hidden="true">
+        <motion.div style={{ scaleX: reduceMotion ? scrollYProgress : progress }} />
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isMobileMenuOpen && (
           <motion.nav
-            initial={{ opacity: 0, y: -12 }}
+            id="mobile-navigation"
+            className="mobile-navigation"
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="sticky-header__mobile-nav"
             aria-label={t("Мобильная навигация", "Mobile navigation")}
           >
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={activeSection === item.id ? "is-active" : ""}
-                onClick={() => scrollToSection(item.id)}
-              >
-                <span>{item.index}</span>
-                <strong>{t(item.ru, item.en)}</strong>
+            {resumeData.navigation.map((item) => (
+              <button key={item.id} type="button" className={activeSection === item.id ? "is-active" : ""} onClick={() => scrollToSection(item.id)}>
+                {localize(item.label, language)}
               </button>
             ))}
           </motion.nav>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   )
 }

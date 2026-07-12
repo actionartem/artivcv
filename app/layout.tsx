@@ -1,63 +1,44 @@
 import React from "react"
-import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import { Toaster } from "@/components/ui/toaster"
-import './globals.css'
+import type { Metadata, Viewport } from "next"
+import { Manrope, JetBrains_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import "./globals.css"
 
-const inter = Inter({ 
+const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  variable: '--font-inter'
-});
+  variable: "--font-manrope",
+  display: "swap",
+})
 
-const jetbrainsMono = JetBrains_Mono({ 
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "cyrillic"],
-  variable: '--font-jetbrains'
-});
+  variable: "--font-jetbrains",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: 'Иванов Артем Антонович - Руководитель продукта с опытом работы 5+ лет',
-  description: 'Руководитель продукта с опытом развития коммерческих B2C и B2B-сервисов и ведения крупных технологических инициатив',
-  generator: 'artivtw',
+  title: "Иванов Артём Антонович - Руководитель IT-проектов",
+  description: "Руководитель IT-проектов с опытом полного цикла разработки и внедрения IT-решений",
+  generator: "artivtw",
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-    shortcut: ['/icon-light-32x32.png'],
+    icon: [{ url: "/icon-dark-32x32.png" }, { url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/apple-icon.png",
+    shortcut: ["/icon-dark-32x32.png"],
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
-  ],
-  width: 'device-width',
+  themeColor: "#17181d",
+  colorScheme: "dark",
+  width: "device-width",
   initialScale: 1,
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className="dark" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+    <html lang="ru">
+      <body className={`${manrope.variable} ${jetbrainsMono.variable}`}>
         {children}
-        <Toaster />
         <Analytics />
       </body>
     </html>

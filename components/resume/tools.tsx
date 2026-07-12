@@ -180,7 +180,7 @@ export function Tools() {
                         alt={logo.alt}
                         width={24}
                         height={24}
-                        className={`${logo.className ?? "h-6 w-6"} object-contain`}
+                        className={`${"className" in logo ? logo.className : "h-6 w-6"} object-contain`}
                       />
                     ))}
                   </div>
